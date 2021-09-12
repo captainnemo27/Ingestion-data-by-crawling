@@ -1,0 +1,1215 @@
+#################################################
+#	LIST AVAILABLE FUNCTIONS		#
+#################################################
+# checkParsingEmpty: Check data parsing empty   #
+# newBreakLineTag: Each tag stay only one line  # 
+# removeNewLine: Remove character new line      #
+# removeHtml: Remove all tags HTML		#
+# cleanSQL: Clean SQL				#
+# trim: Trim data 				#
+# reverse: reverse string : abc -> cba		#
+# remplaceMonths: Remplace months		#
+# decodeHTML: decode HTML			#
+# removeIcon: Remove icon			#
+# compare_date: compare day1 vs day2		#	
+#################################################
+
+
+#Check data parsing empty
+function checkParsingEmpty(arr_val){
+	temp=0 # number of field not null
+	for (key in arr_val){
+		if (arr_val[key]!="")
+			temp+=1
+	}
+	if (temp < 2) # at least two fields not null
+		exit 
+}
+
+# Each tag stay only one line 
+function newBreakLineTag(s){
+	gsub(">",">\n",s);
+	gsub("<","\n<",s);
+	return s;
+}
+
+# Remove character new line
+function removeNewLine(s){
+	gsub(/\n/," ",s);
+	gsub(/\r/," ",s);
+	return s;
+}
+
+# Remove all tags HTML
+function removeHtml(m) {
+	gsub(/<[^>]+>/, " ", m);
+	gsub("\""," ",m);
+   	gsub("[\t ]+$", " ", m);
+    	gsub("^[\t ]+", " ", m);
+    	gsub("\n", " ", m);    
+    	gsub(/[ ]+/, " ", m);
+	return m
+}
+
+# Clean SQL 
+function cleanSQL(m) {
+    txt=removeIcon(removeHtml(decodeHTML(m))); 
+    gsub("\\-\\-\\-", "", txt)
+    gsub(/\\/, "", txt)
+    gsub("\t", "", txt)
+    return trim(txt);
+}
+
+# Trim data 
+function trim(s) {
+	# left trim
+	gsub("^[ \t]+", "", s);
+	
+	# right trim
+	gsub("[ \t]+$", "", s);
+
+	return removeNewLine(s);
+}
+
+# reverse string : abc -> cba
+function reverse( line  ) {
+	nb=length(line);
+	str="";
+	for(i=nb; i>0; i--){
+		str = str""substr(line, i, 1);
+	}
+	return str;
+}
+
+
+# Remplace months 
+function remplaceMonths(m) {
+	 m=toupper(m)
+         sub("JAN.*$","01",m)
+         sub("FEB.*$","02",m)
+         sub("MAR.*$","03",m)
+         sub("APR.*$","04",m)
+         sub("MAY.*$","05",m)
+         sub("JUN.*$","06",m)
+         sub("JUL.*$","07",m)
+         sub("AUG.*$","08",m)
+         sub("SEP.*$","09",m)
+         sub("OCT.*$","10",m)
+         sub("NOV.*$","11",m)
+         sub("DEC.*$","12",m)
+
+
+ 	m=tolower(m)
+	gsub("jan", "01", m)
+	gsub("feb", "02", m)
+	gsub("mar", "03", m)
+	gsub("apr", "04", m)
+	gsub("maj", "05", m)
+	gsub("jun", "06", m)
+	gsub("jul", "07", m)
+	gsub("aug", "08", m)
+	gsub("sep", "09", m)
+	gsub("okt", "10", m)
+	gsub("nov", "11", m)
+	gsub("dec", "12", m)
+        return m
+}
+
+# Decode html 
+function decodeHTML(s){
+
+# Begin code ASCII, reference link : http://www.ascii.cl/htmlcodes.htm 
+	gsub(/&#32;/," ",s);
+	gsub(/&#33;/,"!",s);
+	gsub(/&#35;/,"#",s);
+	gsub(/&#36;/,"$",s);
+	gsub(/&#37;/,"%",s);
+	gsub(/&#39;|&#x0027;/,"'",s);
+	gsub(/&#40;/,"(",s);
+	gsub(/&#41;/,")",s);
+	gsub(/&#42;/,"*",s);
+	gsub(/&#43;/,"+",s);
+	gsub(/&#44;/,",",s);
+	gsub(/&#45;/,"-",s);
+	gsub(/&#46;/,".",s);
+	gsub(/&#47;/,"/",s);
+	gsub(/&#48;/,"0",s);
+	gsub(/&#49;/,"1",s);
+	gsub(/&#50;/,"2",s);
+	gsub(/&#51;/,"3",s);
+	gsub(/&#52;/,"4",s);
+	gsub(/&#53;/,"5",s);
+	gsub(/&#54;/,"6",s);
+	gsub(/&#55;/,"7",s);
+	gsub(/&#56;/,"8",s);
+	gsub(/&#57;/,"9",s);
+	gsub(/&#58;/,":",s);
+	gsub(/&#59;/,";",s);
+	gsub(/&#61;/,"=",s);
+	gsub(/&#63;/,"?",s);
+	gsub(/&#64;/,"@",s);
+	gsub(/&#65;/,"A",s);
+	gsub(/&#66;/,"B",s);
+	gsub(/&#67;/,"C",s);
+	gsub(/&#68;/,"D",s);
+	gsub(/&#69;/,"E",s);
+	gsub(/&#70;/,"F",s);
+	gsub(/&#71;/,"G",s);
+	gsub(/&#72;/,"H",s);
+	gsub(/&#73;/,"I",s);
+	gsub(/&#74;/,"J",s);
+	gsub(/&#75;/,"K",s);
+	gsub(/&#76;/,"L",s);
+	gsub(/&#77;/,"M",s);
+	gsub(/&#78;/,"N",s);
+	gsub(/&#79;/,"O",s);
+	gsub(/&#80;/,"P",s);
+	gsub(/&#81;/,"Q",s);
+	gsub(/&#82;/,"R",s);
+	gsub(/&#83;/,"S",s);
+	gsub(/&#84;/,"T",s);
+	gsub(/&#85;/,"U",s);
+	gsub(/&#86;/,"V",s);
+	gsub(/&#87;/,"W",s);
+	gsub(/&#88;/,"X",s);
+	gsub(/&#89;/,"Y",s);
+	gsub(/&#90;/,"Z",s);
+	gsub(/&#91;/,"[",s);
+	gsub(/&#92;/,"\\",s);
+	gsub(/&#93;/,"]",s);
+	gsub(/&#94;/,"^",s);
+	gsub(/&#95;|&#151;/,"_",s);
+	gsub(/&#96;/,"`",s);
+	gsub(/&#97;/,"a",s);
+	gsub(/&#98;/,"b",s);
+	gsub(/&#99;/,"c",s);
+	gsub(/&#100;/,"d",s);
+	gsub(/&#101;/,"e",s);
+	gsub(/&#102;/,"f",s);
+	gsub(/&#103;/,"g",s);
+	gsub(/&#104;/,"h",s);
+	gsub(/&#105;/,"i",s);
+	gsub(/&#106;/,"j",s);
+	gsub(/&#107;/,"k",s);
+	gsub(/&#108;/,"l",s);
+	gsub(/&#109;/,"m",s);
+	gsub(/&#110;/,"n",s);
+	gsub(/&#111;/,"o",s);
+	gsub(/&#112;/,"p",s);
+	gsub(/&#113;/,"q",s);
+	gsub(/&#114;/,"r",s);
+	gsub(/&#115;/,"s",s);
+	gsub(/&#116;/,"t",s);
+	gsub(/&#117;/,"u",s);
+	gsub(/&#118;/,"v",s);
+	gsub(/&#119;/,"w",s);
+	gsub(/&#120;/,"x",s);
+	gsub(/&#121;/,"y",s);
+	gsub(/&#122;/,"z",s);
+	gsub(/&#123;/,"{",s);
+	gsub(/&#124;/,"|",s);
+	gsub(/&#125;/,"}",s);
+	gsub(/&#126;/,"~",s);
+	gsub(/&#338;/,"Œ",s);
+	gsub(/&#339;|&#156;/,"œ",s);
+	gsub(/&#352;/,"Š",s);
+	gsub(/&#353;/,"š",s);
+	gsub(/&#376;/,"Ÿ",s);
+	gsub(/&#160;|&nbsp;/," ",s);
+	gsub(/&#161;|&iexcl;/,"¡",s);
+	gsub(/&#162;|&cent;/,"¢",s);
+	gsub(/&#163;|&pound;/,"£",s);
+	gsub(/&#165;|&yen;/,"¥",s);
+	gsub(/&#167;|&sect;/,"§",s);	
+	gsub(/&#169;|&copy;/,"©",s);
+	gsub(/&#170;|&ordf;/,"ª",s);
+	gsub(/&#171;|&laquo;/,"«",s);
+	gsub(/&#172;|&not;/,"¬",s);
+	gsub(/&#173;|&shy;/,"­",s);
+	gsub(/&#174;|&reg;/,"®",s);
+	gsub(/&#175;|&macr;/,"¯",s);
+	gsub(/&#176;|&deg;/,"°",s);
+	gsub(/&#177;|&plusmn;/,"±",s);
+	gsub(/&#178;|&sup2;/,"²",s);
+	gsub(/&#179;|&sup3;/,"³",s);	
+	gsub(/&#181;|&micro;/,"µ",s);
+	gsub(/&#182;|&para;/,"¶",s);
+	gsub(/&#183;|&middot;/,"·",s);
+	gsub(/&#185;|&sup1;/,"¹",s);
+	gsub(/&#186;|&ordm;/,"º",s);
+	gsub(/&#187;|&raquo;/,"»",s);	
+	gsub(/&#191;|&iquest;/,"¿",s);
+	gsub(/&#192;|&Agrave;/,"À",s);
+	gsub(/&#193;|&Aacute;/,"Á",s);
+	gsub(/&#194;|&Acirc;/,"Â",s);
+	gsub(/&#195;|&Atilde;/,"Ã",s);
+	gsub(/&#196;|&Auml;/,"Ä",s);
+	gsub(/&#197;|&Aring;/,"Å",s);
+	gsub(/&#198;|&AElig;/,"Æ",s);
+	gsub(/&#199;|&Ccedil;/,"Ç",s);
+	gsub(/&#200;|&Egrave;/,"È",s);
+	gsub(/&#201;|&Eacute;/,"É",s);
+	gsub(/&#202;|&Ecirc;/,"Ê",s);
+	gsub(/&#203;|&Euml;/,"Ë",s);
+	gsub(/&#204;|&Igrave;/,"Ì",s);
+	gsub(/&#205;|&Iacute;/,"Í",s);
+	gsub(/&#206;|&Icirc;/,"Î",s);
+	gsub(/&#207;|&Iuml;/,"Ï",s);
+	gsub(/&#208;|&ETH;/,"Ð",s);
+	gsub(/&#209;|&Ntilde;/,"Ñ",s);
+	gsub(/&#210;|&Ograve;/,"Ò",s);
+	gsub(/&#211;|&Oacute;/,"Ó",s);
+	gsub(/&#212;|&Ocirc;/,"Ô",s);
+	gsub(/&#213;|&Otilde;/,"Õ",s);
+	gsub(/&#214;|&Ouml;/,"Ö",s);
+	gsub(/&#215;|&times;/,"×",s);
+	gsub(/&#216;|&Oslash;/,"Ø",s);
+	gsub(/&#217;|&Ugrave;/,"Ù",s);
+	gsub(/&#218;|&Uacute;/,"Ú",s);
+	gsub(/&#219;|&Ucirc;/,"Û",s);
+	gsub(/&#220;|&Uuml;/,"Ü",s);
+	gsub(/&#221;|&Yacute;/,"Ý",s);
+	gsub(/&#222;|&THORN;/,"Þ",s);
+	gsub(/&#223;|&szlig;/,"ß",s);
+	gsub(/&#224;|&agrave;/,"à",s);
+	gsub(/&#225;|&aacute;/,"á",s);
+	gsub(/&#226;|&acirc;/,"â",s);
+	gsub(/&#227;|&atilde;/,"ã",s);
+	gsub(/&#228;|&auml;/,"ä",s);
+	gsub(/&#229;|&aring;/,"å",s);
+	gsub(/&#230;|&aelig;/,"æ",s);
+	gsub(/&#231;|&ccedil;/,"ç",s);
+	gsub(/&#232;|&egrave;/,"è",s);
+	gsub(/&#233;|&eacute;/,"é",s);
+	gsub(/&#234;|&ecirc;/,"ê",s);
+	gsub(/&#235;|&euml;/,"ë",s);
+	gsub(/&#236;|&igrave;/,"ì",s);
+	gsub(/&#237;|&iacute;/,"í",s);
+	gsub(/&#238;|&icirc;/,"î",s);
+	gsub(/&#239;|&iuml;/,"ï",s);
+	gsub(/&#240;|&eth;/,"ð",s);
+	gsub(/&#241;|&ntilde;/,"ñ",s);
+	gsub(/&#242;|&ograve;/,"ò",s);
+	gsub(/&#243;|&oacute;/,"ó",s);
+	gsub(/&#244;|&ocirc;/,"ô",s);
+	gsub(/&#245;|&otilde;/,"õ",s);
+	gsub(/&#246;|&ouml;/,"ö",s);
+	gsub(/&#247;|&divide;/,"÷",s);
+	gsub(/&#248;|&oslash;/,"ø",s);
+	gsub(/&#249;|&ugrave;/,"ù",s);
+	gsub(/&#250;|&uacute;/,"ú",s);
+	gsub(/&#251;|&ucirc;/,"û",s);
+	gsub(/&#252;|&uuml;/,"ü",s);
+	gsub(/&#253;|&yacute;/,"ý",s);
+	gsub(/&#254;|&thorn;/,"þ",s);
+	gsub(/&#255;|&yuml;/,"ÿ",s);
+	gsub(/&#34;|&quot;/,"'",s); # turn " into ', avoid to erros syntax sql query
+	gsub(/&#38;|&amp;/,"\\&",s); 
+	gsub(/&#60;|&lt;/,"<",s);
+	gsub(/&#62;|&gt;/,">",s);
+	gsub(/&#8364;|&#128;|&euro;/,"€",s);
+	gsub(/&#8203;|&#65279;|&#8232;/,"",s);	
+# End code ASCII
+
+
+# begin unicode
+	gsub(/&#402;/,"ƒ",s);
+	gsub(/&#8211;|&#150;|&ndash;/,"–",s);
+	gsub(/&#8212;|&mdash;/,"—",s);
+	gsub(/&#8216;|&lsquo;/,"\\‘",s);
+	gsub(/&#8217;|&#146;|&rsquo;/,"\\’",s);
+	gsub(/&#8218;|&#130;|&sbquo;/,"‚",s);
+	gsub(/&#8220;|&#147;|&ldquo;/,"\\“",s);
+	gsub(/&#8221;|&rdquo;/,"\\”",s);
+	gsub(/&#8222;|&bdquo;/,"„",s);
+	gsub(/&#8224;|&dagger;/,"†",s);
+	gsub(/&#8225;|&Dagger;/,"‡",s);
+	gsub(/&#8226;|&#149;|&bull;/,"•",s);
+	gsub(/&#8230;|&#133;|&hellip;/,"\\…",s);
+	gsub(/&#8240;|&#137;|&permil;/,"‰",s);
+	gsub(/&#8242;|&#039;|&#145;|&prime;/,"′",s);
+	gsub(/&#8243;|&#148;|&Prime;/,"″",s);
+	gsub(/&#8249;|&lsaquo;/,"‹",s);
+	gsub(/&#8250;|&rsaquo;/,"›",s);
+	gsub(/&#8254;|&oline;/,"‾",s);
+	gsub(/&#8260;|&frasl;/,"⁄",s);
+	gsub(/&#8482;|&#153;/,"™",s);
+	gsub(/&#164;|&curren;/,"¤",s);
+	gsub(/&#166;|&brvbar;/,"¦",s);
+	gsub(/&#168;|&uml;/,"¨",s);
+	gsub(/&#180;|&#145;|&acute;/,"´",s);
+	gsub(/&#184;|&cedil;/,"¸",s);
+	gsub(/&#188;|&frac14;/,"¼",s);
+	gsub(/&#189;|&frac12;/,"½",s);
+	gsub(/&#190;|&frac34;/,"¾",s);
+	gsub(/&#10070;/,"❖",s);
+# end unicode
+
+	return s;
+}
+
+# Remove Icon
+function removeIcon(str) {
+# reference link: https://apps.timwhitlock.info/emoji/tables/unicode
+	gsub(/\xF0\x9F\x98\x81/,"",str);
+	gsub(/\xF0\x9F\x98\x82/,"",str);
+	gsub(/\xF0\x9F\x98\x83/,"",str);
+	gsub(/\xF0\x9F\x98\x84/,"",str);
+	gsub(/\xF0\x9F\x98\x85/,"",str);
+	gsub(/\xF0\x9F\x98\x86/,"",str);
+	gsub(/\xF0\x9F\x98\x89/,"",str);
+	gsub(/\xF0\x9F\x98\x8A/,"",str);
+	gsub(/\xF0\x9F\x98\x8B/,"",str);
+	gsub(/\xF0\x9F\x98\x8C/,"",str);
+	gsub(/\xF0\x9F\x98\x8D/,"",str);
+	gsub(/\xF0\x9F\x98\x8F/,"",str);
+	gsub(/\xF0\x9F\x98\x92/,"",str);
+	gsub(/\xF0\x9F\x98\x93/,"",str);
+	gsub(/\xF0\x9F\x98\x94/,"",str);
+	gsub(/\xF0\x9F\x98\x96/,"",str);
+	gsub(/\xF0\x9F\x98\x98/,"",str);
+	gsub(/\xF0\x9F\x98\x9A/,"",str);
+	gsub(/\xF0\x9F\x98\x9C/,"",str);
+	gsub(/\xF0\x9F\x98\x9D/,"",str);
+	gsub(/\xF0\x9F\x98\x9E/,"",str);
+	gsub(/\xF0\x9F\x98\xA0/,"",str);
+	gsub(/\xF0\x9F\x98\xA1/,"",str);
+	gsub(/\xF0\x9F\x98\xA2/,"",str);
+	gsub(/\xF0\x9F\x98\xA3/,"",str);
+	gsub(/\xF0\x9F\x98\xA4/,"",str);
+	gsub(/\xF0\x9F\x98\xA5/,"",str);
+	gsub(/\xF0\x9F\x98\xA8/,"",str);
+	gsub(/\xF0\x9F\x98\xA9/,"",str);
+	gsub(/\xF0\x9F\x98\xAA/,"",str);
+	gsub(/\xF0\x9F\x98\xAB/,"",str);
+	gsub(/\xF0\x9F\x98\xAD/,"",str);
+	gsub(/\xF0\x9F\x98\xB0/,"",str);
+	gsub(/\xF0\x9F\x98\xB1/,"",str);
+	gsub(/\xF0\x9F\x98\xB2/,"",str);
+	gsub(/\xF0\x9F\x98\xB3/,"",str);
+	gsub(/\xF0\x9F\x98\xB5/,"",str);
+	gsub(/\xF0\x9F\x98\xB7/,"",str);
+	gsub(/\xF0\x9F\x98\xB8/,"",str);
+	gsub(/\xF0\x9F\x98\xB9/,"",str);
+	gsub(/\xF0\x9F\x98\xBA/,"",str);
+	gsub(/\xF0\x9F\x98\xBB/,"",str);
+	gsub(/\xF0\x9F\x98\xBC/,"",str);
+	gsub(/\xF0\x9F\x98\xBD/,"",str);
+	gsub(/\xF0\x9F\x98\xBE/,"",str);
+	gsub(/\xF0\x9F\x98\xBF/,"",str);
+	gsub(/\xF0\x9F\x99\x80/,"",str);
+	gsub(/\xF0\x9F\x99\x85/,"",str);
+	gsub(/\xF0\x9F\x99\x86/,"",str);
+	gsub(/\xF0\x9F\x99\x87/,"",str);
+	gsub(/\xF0\x9F\x99\x88/,"",str);
+	gsub(/\xF0\x9F\x99\x89/,"",str);
+	gsub(/\xF0\x9F\x99\x8A/,"",str);
+	gsub(/\xF0\x9F\x99\x8B/,"",str);
+	gsub(/\xF0\x9F\x99\x8C/,"",str);
+	gsub(/\xF0\x9F\x99\x8D/,"",str);
+	gsub(/\xF0\x9F\x99\x8E/,"",str);
+	gsub(/\xF0\x9F\x99\x8F/,"",str);
+	gsub(/\xE2\x9C\x82/,"",str);
+	gsub(/\xE2\x9C\x85/,"",str);
+	gsub(/\xE2\x9C\x88/,"",str);
+	gsub(/\xE2\x9C\x89/,"",str);
+	gsub(/\xE2\x9C\x8A/,"",str);
+	gsub(/\xE2\x9C\x8B/,"",str);
+	gsub(/\xE2\x9C\x8C/,"",str);
+	gsub(/\xE2\x9C\x8F/,"",str);
+	gsub(/\xE2\x9C\x92/,"",str);
+	gsub(/\xE2\x9C\x94/,"",str);
+	gsub(/\xE2\x9C\x96/,"",str);
+	gsub(/\xE2\x9C\xA8/,"",str);
+	gsub(/\xE2\x9C\xB3/,"",str);
+	gsub(/\xE2\x9C\xB4/,"",str);
+	gsub(/\xE2\x9D\x84/,"",str);
+	gsub(/\xE2\x9D\x87/,"",str);
+	gsub(/\xE2\x9D\x8C/,"",str);
+	gsub(/\xE2\x9D\x8E/,"",str);
+	gsub(/\xE2\x9D\x93/,"",str);
+	gsub(/\xE2\x9D\x94/,"",str);
+	gsub(/\xE2\x9D\x95/,"",str);
+	gsub(/\xE2\x9D\x97/,"",str);
+	gsub(/\xE2\x9D\xA4/,"",str);
+	gsub(/\xE2\x9E\x95/,"",str);
+	gsub(/\xE2\x9E\x96/,"",str);
+	gsub(/\xE2\x9E\x97/,"",str);
+	gsub(/\xE2\x9E\xA1/,"",str);
+	gsub(/\xE2\x9E\xB0/,"",str);
+	gsub(/\xF0\x9F\x9A\x80/,"",str);
+	gsub(/\xF0\x9F\x9A\x83/,"",str);
+	gsub(/\xF0\x9F\x9A\x84/,"",str);
+	gsub(/\xF0\x9F\x9A\x85/,"",str);
+	gsub(/\xF0\x9F\x9A\x87/,"",str);
+	gsub(/\xF0\x9F\x9A\x89/,"",str);
+	gsub(/\xF0\x9F\x9A\x8C/,"",str);
+	gsub(/\xF0\x9F\x9A\x8F/,"",str);
+	gsub(/\xF0\x9F\x9A\x91/,"",str);
+	gsub(/\xF0\x9F\x9A\x92/,"",str);
+	gsub(/\xF0\x9F\x9A\x93/,"",str);
+	gsub(/\xF0\x9F\x9A\x95/,"",str);
+	gsub(/\xF0\x9F\x9A\x97/,"",str);
+	gsub(/\xF0\x9F\x9A\x99/,"",str);
+	gsub(/\xF0\x9F\x9A\x9A/,"",str);
+	gsub(/\xF0\x9F\x9A\xA2/,"",str);
+	gsub(/\xF0\x9F\x9A\xA4/,"",str);
+	gsub(/\xF0\x9F\x9A\xA5/,"",str);
+	gsub(/\xF0\x9F\x9A\xA7/,"",str);
+	gsub(/\xF0\x9F\x9A\xA8/,"",str);
+	gsub(/\xF0\x9F\x9A\xA9/,"",str);
+	gsub(/\xF0\x9F\x9A\xAA/,"",str);
+	gsub(/\xF0\x9F\x9A\xAB/,"",str);
+	gsub(/\xF0\x9F\x9A\xAC/,"",str);
+	gsub(/\xF0\x9F\x9A\xAD/,"",str);
+	gsub(/\xF0\x9F\x9A\xB2/,"",str);
+	gsub(/\xF0\x9F\x9A\xB6/,"",str);
+	gsub(/\xF0\x9F\x9A\xB9/,"",str);
+	gsub(/\xF0\x9F\x9A\xBA/,"",str);
+	gsub(/\xF0\x9F\x9A\xBB/,"",str);
+	gsub(/\xF0\x9F\x9A\xBC/,"",str);
+	gsub(/\xF0\x9F\x9A\xBD/,"",str);
+	gsub(/\xF0\x9F\x9A\xBE/,"",str);
+	gsub(/\xF0\x9F\x9B\x80/,"",str);
+	gsub(/\xE2\x93\x82/,"",str);
+	gsub(/\xF0\x9F\x85\xB0/,"",str);
+	gsub(/\xF0\x9F\x85\xB1/,"",str);
+	gsub(/\xF0\x9F\x85\xBE/,"",str);
+	gsub(/\xF0\x9F\x85\xBF/,"",str);
+	gsub(/\xF0\x9F\x86\x8E/,"",str);
+	gsub(/\xF0\x9F\x86\x91/,"",str);
+	gsub(/\xF0\x9F\x86\x92/,"",str);
+	gsub(/\xF0\x9F\x86\x93/,"",str);
+	gsub(/\xF0\x9F\x86\x94/,"",str);
+	gsub(/\xF0\x9F\x86\x95/,"",str);
+	gsub(/\xF0\x9F\x86\x96/,"",str);
+	gsub(/\xF0\x9F\x86\x97/,"",str);
+	gsub(/\xF0\x9F\x86\x98/,"",str);
+	gsub(/\xF0\x9F\x86\x99/,"",str);
+	gsub(/\xF0\x9F\x86\x9A/,"",str);
+	gsub(/\xF0\x9F\x87\xA9\xF0\x9F\x87\xAA/,"",str);
+	gsub(/\xF0\x9F\x87\xAC\xF0\x9F\x87\xA7/,"",str);
+	gsub(/\xF0\x9F\x87\xA8\xF0\x9F\x87\xB3/,"",str);
+	gsub(/\xF0\x9F\x87\xAF\xF0\x9F\x87\xB5/,"",str);
+	gsub(/\xF0\x9F\x87\xB0\xF0\x9F\x87\xB7/,"",str);
+	gsub(/\xF0\x9F\x87\xAB\xF0\x9F\x87\xB7/,"",str);
+	gsub(/\xF0\x9F\x87\xAA\xF0\x9F\x87\xB8/,"",str);
+	gsub(/\xF0\x9F\x87\xAE\xF0\x9F\x87\xB9/,"",str);
+	gsub(/\xF0\x9F\x87\xBA\xF0\x9F\x87\xB8/,"",str);
+	gsub(/\xF0\x9F\x87\xB7\xF0\x9F\x87\xBA/,"",str);
+	gsub(/\xF0\x9F\x88\x81/,"",str);
+	gsub(/\xF0\x9F\x88\x82/,"",str);
+	gsub(/\xF0\x9F\x88\x9A/,"",str);
+	gsub(/\xF0\x9F\x88\xAF/,"",str);
+	gsub(/\xF0\x9F\x88\xB2/,"",str);
+	gsub(/\xF0\x9F\x88\xB3/,"",str);
+	gsub(/\xF0\x9F\x88\xB4/,"",str);
+	gsub(/\xF0\x9F\x88\xB5/,"",str);
+	gsub(/\xF0\x9F\x88\xB6/,"",str);
+	gsub(/\xF0\x9F\x88\xB7/,"",str);
+	gsub(/\xF0\x9F\x88\xB8/,"",str);
+	gsub(/\xF0\x9F\x88\xB9/,"",str);
+	gsub(/\xF0\x9F\x88\xBA/,"",str);
+	gsub(/\xF0\x9F\x89\x90/,"",str);
+	gsub(/\xF0\x9F\x89\x91/,"",str);
+	gsub(/\xC2\xA9/,"",str);
+	gsub(/\xC2\xAE/,"",str);
+	gsub(/\xE2\x80\xBC/,"",str);
+	gsub(/\xE2\x81\x89/,"",str);
+	gsub(/\x38\xE2\x83\xA3/,"",str);
+	gsub(/\x39\xE2\x83\xA3/,"",str);
+	gsub(/\x37\xE2\x83\xA3/,"",str);
+	gsub(/\x36\xE2\x83\xA3/,"",str);
+	gsub(/\x31\xE2\x83\xA3/,"",str);
+	gsub(/\x30\xE2\x83\xA3/,"",str);
+	gsub(/\x32\xE2\x83\xA3/,"",str);
+	gsub(/\x33\xE2\x83\xA3/,"",str);
+	gsub(/\x35\xE2\x83\xA3/,"",str);
+	gsub(/\x34\xE2\x83\xA3/,"",str);
+	gsub(/\x23\xE2\x83\xA3/,"",str);
+	gsub(/\xE2\x84\xA2/,"",str);
+	gsub(/\xE2\x84\xB9/,"",str);
+	gsub(/\xE2\x86\x94/,"",str);
+	gsub(/\xE2\x86\x95/,"",str);
+	gsub(/\xE2\x86\x96/,"",str);
+	gsub(/\xE2\x86\x97/,"",str);
+	gsub(/\xE2\x86\x98/,"",str);
+	gsub(/\xE2\x86\x99/,"",str);
+	gsub(/\xE2\x86\xA9/,"",str);
+	gsub(/\xE2\x86\xAA/,"",str);
+	gsub(/\xE2\x8C\x9A/,"",str);
+	gsub(/\xE2\x8C\x9B/,"",str);
+	gsub(/\xE2\x8F\xA9/,"",str);
+	gsub(/\xE2\x8F\xAA/,"",str);
+	gsub(/\xE2\x8F\xAB/,"",str);
+	gsub(/\xE2\x8F\xAC/,"",str);
+	gsub(/\xE2\x8F\xB0/,"",str);
+	gsub(/\xE2\x8F\xB3/,"",str);
+	gsub(/\xE2\x96\xAA/,"",str);
+	gsub(/\xE2\x96\xAB/,"",str);
+	gsub(/\xE2\x96\xB6/,"",str);
+	gsub(/\xE2\x97\x80/,"",str);
+	gsub(/\xE2\x97\xBB/,"",str);
+	gsub(/\xE2\x97\xBC/,"",str);
+	gsub(/\xE2\x97\xBD/,"",str);
+	gsub(/\xE2\x97\xBE/,"",str);
+	gsub(/\xE2\x98\x80/,"",str);
+	gsub(/\xE2\x98\x81/,"",str);
+	gsub(/\xE2\x98\x8E/,"",str);
+	gsub(/\xE2\x98\x91/,"",str);
+	gsub(/\xE2\x98\x94/,"",str);
+	gsub(/\xE2\x98\x95/,"",str);
+	gsub(/\xE2\x98\x9D/,"",str);
+	gsub(/\xE2\x98\xBA/,"",str);
+	gsub(/\xE2\x99\x88/,"",str);
+	gsub(/\xE2\x99\x89/,"",str);
+	gsub(/\xE2\x99\x8A/,"",str);
+	gsub(/\xE2\x99\x8B/,"",str);
+	gsub(/\xE2\x99\x8C/,"",str);
+	gsub(/\xE2\x99\x8D/,"",str);
+	gsub(/\xE2\x99\x8E/,"",str);
+	gsub(/\xE2\x99\x8F/,"",str);
+	gsub(/\xE2\x99\x90/,"",str);
+	gsub(/\xE2\x99\x91/,"",str);
+	gsub(/\xE2\x99\x92/,"",str);
+	gsub(/\xE2\x99\x93/,"",str);
+	gsub(/\xE2\x99\xA0/,"",str);
+	gsub(/\xE2\x99\xA3/,"",str);
+	gsub(/\xE2\x99\xA5/,"",str);
+	gsub(/\xE2\x99\xA6/,"",str);
+	gsub(/\xE2\x99\xA8/,"",str);
+	gsub(/\xE2\x99\xBB/,"",str);
+	gsub(/\xE2\x99\xBF/,"",str);
+	gsub(/\xE2\x9A\x93/,"",str);
+	gsub(/\xE2\x9A\xA0/,"",str);
+	gsub(/\xE2\x9A\xA1/,"",str);
+	gsub(/\xE2\x9A\xAA/,"",str);
+	gsub(/\xE2\x9A\xAB/,"",str);
+	gsub(/\xE2\x9A\xBD/,"",str);
+	gsub(/\xE2\x9A\xBE/,"",str);
+	gsub(/\xE2\x9B\x84/,"",str);
+	gsub(/\xE2\x9B\x85/,"",str);
+	gsub(/\xE2\x9B\x8E/,"",str);
+	gsub(/\xE2\x9B\x94/,"",str);
+	gsub(/\xE2\x9B\xAA/,"",str);
+	gsub(/\xE2\x9B\xB2/,"",str);
+	gsub(/\xE2\x9B\xB3/,"",str);
+	gsub(/\xE2\x9B\xB5/,"",str);
+	gsub(/\xE2\x9B\xBA/,"",str);
+	gsub(/\xE2\x9B\xBD/,"",str);
+	gsub(/\xE2\xA4\xB4/,"",str);
+	gsub(/\xE2\xA4\xB5/,"",str);
+	gsub(/\xE2\xAC\x85/,"",str);
+	gsub(/\xE2\xAC\x86/,"",str);
+	gsub(/\xE2\xAC\x87/,"",str);
+	gsub(/\xE2\xAC\x9B/,"",str);
+	gsub(/\xE2\xAC\x9C/,"",str);
+	gsub(/\xE2\xAD\x90/,"",str);
+	gsub(/\xE2\xAD\x95/,"",str);
+	gsub(/\xE3\x80\xB0/,"",str);
+	gsub(/\xE3\x80\xBD/,"",str);
+	gsub(/\xE3\x8A\x97/,"",str);
+	gsub(/\xE3\x8A\x99/,"",str);
+	gsub(/\xF0\x9F\x80\x84/,"",str);
+	gsub(/\xF0\x9F\x83\x8F/,"",str);
+	gsub(/\xF0\x9F\x8C\x80/,"",str);
+	gsub(/\xF0\x9F\x8C\x81/,"",str);
+	gsub(/\xF0\x9F\x8C\x82/,"",str);
+	gsub(/\xF0\x9F\x8C\x83/,"",str);
+	gsub(/\xF0\x9F\x8C\x84/,"",str);
+	gsub(/\xF0\x9F\x8C\x85/,"",str);
+	gsub(/\xF0\x9F\x8C\x86/,"",str);
+	gsub(/\xF0\x9F\x8C\x87/,"",str);
+	gsub(/\xF0\x9F\x8C\x88/,"",str);
+	gsub(/\xF0\x9F\x8C\x89/,"",str);
+	gsub(/\xF0\x9F\x8C\x8A/,"",str);
+	gsub(/\xF0\x9F\x8C\x8B/,"",str);
+	gsub(/\xF0\x9F\x8C\x8C/,"",str);
+	gsub(/\xF0\x9F\x8C\x8F/,"",str);
+	gsub(/\xF0\x9F\x8C\x91/,"",str);
+	gsub(/\xF0\x9F\x8C\x93/,"",str);
+	gsub(/\xF0\x9F\x8C\x94/,"",str);
+	gsub(/\xF0\x9F\x8C\x95/,"",str);
+	gsub(/\xF0\x9F\x8C\x99/,"",str);
+	gsub(/\xF0\x9F\x8C\x9B/,"",str);
+	gsub(/\xF0\x9F\x8C\x9F/,"",str);
+	gsub(/\xF0\x9F\x8C\xA0/,"",str);
+	gsub(/\xF0\x9F\x8C\xB0/,"",str);
+	gsub(/\xF0\x9F\x8C\xB1/,"",str);
+	gsub(/\xF0\x9F\x8C\xB4/,"",str);
+	gsub(/\xF0\x9F\x8C\xB5/,"",str);
+	gsub(/\xF0\x9F\x8C\xB7/,"",str);
+	gsub(/\xF0\x9F\x8C\xB8/,"",str);
+	gsub(/\xF0\x9F\x8C\xB9/,"",str);
+	gsub(/\xF0\x9F\x8C\xBA/,"",str);
+	gsub(/\xF0\x9F\x8C\xBB/,"",str);
+	gsub(/\xF0\x9F\x8C\xBC/,"",str);
+	gsub(/\xF0\x9F\x8C\xBD/,"",str);
+	gsub(/\xF0\x9F\x8C\xBE/,"",str);
+	gsub(/\xF0\x9F\x8C\xBF/,"",str);
+	gsub(/\xF0\x9F\x8D\x80/,"",str);
+	gsub(/\xF0\x9F\x8D\x81/,"",str);
+	gsub(/\xF0\x9F\x8D\x82/,"",str);
+	gsub(/\xF0\x9F\x8D\x83/,"",str);
+	gsub(/\xF0\x9F\x8D\x84/,"",str);
+	gsub(/\xF0\x9F\x8D\x85/,"",str);
+	gsub(/\xF0\x9F\x8D\x86/,"",str);
+	gsub(/\xF0\x9F\x8D\x87/,"",str);
+	gsub(/\xF0\x9F\x8D\x88/,"",str);
+	gsub(/\xF0\x9F\x8D\x89/,"",str);
+	gsub(/\xF0\x9F\x8D\x8A/,"",str);
+	gsub(/\xF0\x9F\x8D\x8C/,"",str);
+	gsub(/\xF0\x9F\x8D\x8D/,"",str);
+	gsub(/\xF0\x9F\x8D\x8E/,"",str);
+	gsub(/\xF0\x9F\x8D\x8F/,"",str);
+	gsub(/\xF0\x9F\x8D\x91/,"",str);
+	gsub(/\xF0\x9F\x8D\x92/,"",str);
+	gsub(/\xF0\x9F\x8D\x93/,"",str);
+	gsub(/\xF0\x9F\x8D\x94/,"",str);
+	gsub(/\xF0\x9F\x8D\x95/,"",str);
+	gsub(/\xF0\x9F\x8D\x96/,"",str);
+	gsub(/\xF0\x9F\x8D\x97/,"",str);
+	gsub(/\xF0\x9F\x8D\x98/,"",str);
+	gsub(/\xF0\x9F\x8D\x99/,"",str);
+	gsub(/\xF0\x9F\x8D\x9A/,"",str);
+	gsub(/\xF0\x9F\x8D\x9B/,"",str);
+	gsub(/\xF0\x9F\x8D\x9C/,"",str);
+	gsub(/\xF0\x9F\x8D\x9D/,"",str);
+	gsub(/\xF0\x9F\x8D\x9E/,"",str);
+	gsub(/\xF0\x9F\x8D\x9F/,"",str);
+	gsub(/\xF0\x9F\x8D\xA0/,"",str);
+	gsub(/\xF0\x9F\x8D\xA1/,"",str);
+	gsub(/\xF0\x9F\x8D\xA2/,"",str);
+	gsub(/\xF0\x9F\x8D\xA3/,"",str);
+	gsub(/\xF0\x9F\x8D\xA4/,"",str);
+	gsub(/\xF0\x9F\x8D\xA5/,"",str);
+	gsub(/\xF0\x9F\x8D\xA6/,"",str);
+	gsub(/\xF0\x9F\x8D\xA7/,"",str);
+	gsub(/\xF0\x9F\x8D\xA8/,"",str);
+	gsub(/\xF0\x9F\x8D\xA9/,"",str);
+	gsub(/\xF0\x9F\x8D\xAA/,"",str);
+	gsub(/\xF0\x9F\x8D\xAB/,"",str);
+	gsub(/\xF0\x9F\x8D\xAC/,"",str);
+	gsub(/\xF0\x9F\x8D\xAD/,"",str);
+	gsub(/\xF0\x9F\x8D\xAE/,"",str);
+	gsub(/\xF0\x9F\x8D\xAF/,"",str);
+	gsub(/\xF0\x9F\x8D\xB0/,"",str);
+	gsub(/\xF0\x9F\x8D\xB1/,"",str);
+	gsub(/\xF0\x9F\x8D\xB2/,"",str);
+	gsub(/\xF0\x9F\x8D\xB3/,"",str);
+	gsub(/\xF0\x9F\x8D\xB4/,"",str);
+	gsub(/\xF0\x9F\x8D\xB5/,"",str);
+	gsub(/\xF0\x9F\x8D\xB6/,"",str);
+	gsub(/\xF0\x9F\x8D\xB7/,"",str);
+	gsub(/\xF0\x9F\x8D\xB8/,"",str);
+	gsub(/\xF0\x9F\x8D\xB9/,"",str);
+	gsub(/\xF0\x9F\x8D\xBA/,"",str);
+	gsub(/\xF0\x9F\x8D\xBB/,"",str);
+	gsub(/\xF0\x9F\x8E\x80/,"",str);
+	gsub(/\xF0\x9F\x8E\x81/,"",str);
+	gsub(/\xF0\x9F\x8E\x82/,"",str);
+	gsub(/\xF0\x9F\x8E\x83/,"",str);
+	gsub(/\xF0\x9F\x8E\x84/,"",str);
+	gsub(/\xF0\x9F\x8E\x85/,"",str);
+	gsub(/\xF0\x9F\x8E\x86/,"",str);
+	gsub(/\xF0\x9F\x8E\x87/,"",str);
+	gsub(/\xF0\x9F\x8E\x88/,"",str);
+	gsub(/\xF0\x9F\x8E\x89/,"",str);
+	gsub(/\xF0\x9F\x8E\x8A/,"",str);
+	gsub(/\xF0\x9F\x8E\x8B/,"",str);
+	gsub(/\xF0\x9F\x8E\x8C/,"",str);
+	gsub(/\xF0\x9F\x8E\x8D/,"",str);
+	gsub(/\xF0\x9F\x8E\x8E/,"",str);
+	gsub(/\xF0\x9F\x8E\x8F/,"",str);
+	gsub(/\xF0\x9F\x8E\x90/,"",str);
+	gsub(/\xF0\x9F\x8E\x91/,"",str);
+	gsub(/\xF0\x9F\x8E\x92/,"",str);
+	gsub(/\xF0\x9F\x8E\x93/,"",str);
+	gsub(/\xF0\x9F\x8E\xA0/,"",str);
+	gsub(/\xF0\x9F\x8E\xA1/,"",str);
+	gsub(/\xF0\x9F\x8E\xA2/,"",str);
+	gsub(/\xF0\x9F\x8E\xA3/,"",str);
+	gsub(/\xF0\x9F\x8E\xA4/,"",str);
+	gsub(/\xF0\x9F\x8E\xA5/,"",str);
+	gsub(/\xF0\x9F\x8E\xA6/,"",str);
+	gsub(/\xF0\x9F\x8E\xA7/,"",str);
+	gsub(/\xF0\x9F\x8E\xA8/,"",str);
+	gsub(/\xF0\x9F\x8E\xA9/,"",str);
+	gsub(/\xF0\x9F\x8E\xAA/,"",str);
+	gsub(/\xF0\x9F\x8E\xAB/,"",str);
+	gsub(/\xF0\x9F\x8E\xAC/,"",str);
+	gsub(/\xF0\x9F\x8E\xAD/,"",str);
+	gsub(/\xF0\x9F\x8E\xAE/,"",str);
+	gsub(/\xF0\x9F\x8E\xAF/,"",str);
+	gsub(/\xF0\x9F\x8E\xB0/,"",str);
+	gsub(/\xF0\x9F\x8E\xB1/,"",str);
+	gsub(/\xF0\x9F\x8E\xB2/,"",str);
+	gsub(/\xF0\x9F\x8E\xB3/,"",str);
+	gsub(/\xF0\x9F\x8E\xB4/,"",str);
+	gsub(/\xF0\x9F\x8E\xB5/,"",str);
+	gsub(/\xF0\x9F\x8E\xB6/,"",str);
+	gsub(/\xF0\x9F\x8E\xB7/,"",str);
+	gsub(/\xF0\x9F\x8E\xB8/,"",str);
+	gsub(/\xF0\x9F\x8E\xB9/,"",str);
+	gsub(/\xF0\x9F\x8E\xBA/,"",str);
+	gsub(/\xF0\x9F\x8E\xBB/,"",str);
+	gsub(/\xF0\x9F\x8E\xBC/,"",str);
+	gsub(/\xF0\x9F\x8E\xBD/,"",str);
+	gsub(/\xF0\x9F\x8E\xBE/,"",str);
+	gsub(/\xF0\x9F\x8E\xBF/,"",str);
+	gsub(/\xF0\x9F\x8F\x80/,"",str);
+	gsub(/\xF0\x9F\x8F\x81/,"",str);
+	gsub(/\xF0\x9F\x8F\x82/,"",str);
+	gsub(/\xF0\x9F\x8F\x83/,"",str);
+	gsub(/\xF0\x9F\x8F\x84/,"",str);
+	gsub(/\xF0\x9F\x8F\x86/,"",str);
+	gsub(/\xF0\x9F\x8F\x88/,"",str);
+	gsub(/\xF0\x9F\x8F\x8A/,"",str);
+	gsub(/\xF0\x9F\x8F\xA0/,"",str);
+	gsub(/\xF0\x9F\x8F\xA1/,"",str);
+	gsub(/\xF0\x9F\x8F\xA2/,"",str);
+	gsub(/\xF0\x9F\x8F\xA3/,"",str);
+	gsub(/\xF0\x9F\x8F\xA5/,"",str);
+	gsub(/\xF0\x9F\x8F\xA6/,"",str);
+	gsub(/\xF0\x9F\x8F\xA7/,"",str);
+	gsub(/\xF0\x9F\x8F\xA8/,"",str);
+	gsub(/\xF0\x9F\x8F\xA9/,"",str);
+	gsub(/\xF0\x9F\x8F\xAA/,"",str);
+	gsub(/\xF0\x9F\x8F\xAB/,"",str);
+	gsub(/\xF0\x9F\x8F\xAC/,"",str);
+	gsub(/\xF0\x9F\x8F\xAD/,"",str);
+	gsub(/\xF0\x9F\x8F\xAE/,"",str);
+	gsub(/\xF0\x9F\x8F\xAF/,"",str);
+	gsub(/\xF0\x9F\x8F\xB0/,"",str);
+	gsub(/\xF0\x9F\x90\x8C/,"",str);
+	gsub(/\xF0\x9F\x90\x8D/,"",str);
+	gsub(/\xF0\x9F\x90\x8E/,"",str);
+	gsub(/\xF0\x9F\x90\x91/,"",str);
+	gsub(/\xF0\x9F\x90\x92/,"",str);
+	gsub(/\xF0\x9F\x90\x94/,"",str);
+	gsub(/\xF0\x9F\x90\x97/,"",str);
+	gsub(/\xF0\x9F\x90\x98/,"",str);
+	gsub(/\xF0\x9F\x90\x99/,"",str);
+	gsub(/\xF0\x9F\x90\x9A/,"",str);
+	gsub(/\xF0\x9F\x90\x9B/,"",str);
+	gsub(/\xF0\x9F\x90\x9C/,"",str);
+	gsub(/\xF0\x9F\x90\x9D/,"",str);
+	gsub(/\xF0\x9F\x90\x9E/,"",str);
+	gsub(/\xF0\x9F\x90\x9F/,"",str);
+	gsub(/\xF0\x9F\x90\xA0/,"",str);
+	gsub(/\xF0\x9F\x90\xA1/,"",str);
+	gsub(/\xF0\x9F\x90\xA2/,"",str);
+	gsub(/\xF0\x9F\x90\xA3/,"",str);
+	gsub(/\xF0\x9F\x90\xA4/,"",str);
+	gsub(/\xF0\x9F\x90\xA5/,"",str);
+	gsub(/\xF0\x9F\x90\xA6/,"",str);
+	gsub(/\xF0\x9F\x90\xA7/,"",str);
+	gsub(/\xF0\x9F\x90\xA8/,"",str);
+	gsub(/\xF0\x9F\x90\xA9/,"",str);
+	gsub(/\xF0\x9F\x90\xAB/,"",str);
+	gsub(/\xF0\x9F\x90\xAC/,"",str);
+	gsub(/\xF0\x9F\x90\xAD/,"",str);
+	gsub(/\xF0\x9F\x90\xAE/,"",str);
+	gsub(/\xF0\x9F\x90\xAF/,"",str);
+	gsub(/\xF0\x9F\x90\xB0/,"",str);
+	gsub(/\xF0\x9F\x90\xB1/,"",str);
+	gsub(/\xF0\x9F\x90\xB2/,"",str);
+	gsub(/\xF0\x9F\x90\xB3/,"",str);
+	gsub(/\xF0\x9F\x90\xB4/,"",str);
+	gsub(/\xF0\x9F\x90\xB5/,"",str);
+	gsub(/\xF0\x9F\x90\xB6/,"",str);
+	gsub(/\xF0\x9F\x90\xB7/,"",str);
+	gsub(/\xF0\x9F\x90\xB8/,"",str);
+	gsub(/\xF0\x9F\x90\xB9/,"",str);
+	gsub(/\xF0\x9F\x90\xBA/,"",str);
+	gsub(/\xF0\x9F\x90\xBB/,"",str);
+	gsub(/\xF0\x9F\x90\xBC/,"",str);
+	gsub(/\xF0\x9F\x90\xBD/,"",str);
+	gsub(/\xF0\x9F\x90\xBE/,"",str);
+	gsub(/\xF0\x9F\x91\x80/,"",str);
+	gsub(/\xF0\x9F\x91\x82/,"",str);
+	gsub(/\xF0\x9F\x91\x83/,"",str);
+	gsub(/\xF0\x9F\x91\x84/,"",str);
+	gsub(/\xF0\x9F\x91\x85/,"",str);
+	gsub(/\xF0\x9F\x91\x86/,"",str);
+	gsub(/\xF0\x9F\x91\x87/,"",str);
+	gsub(/\xF0\x9F\x91\x88/,"",str);
+	gsub(/\xF0\x9F\x91\x89/,"",str);
+	gsub(/\xF0\x9F\x91\x8A/,"",str);
+	gsub(/\xF0\x9F\x91\x8B/,"",str);
+	gsub(/\xF0\x9F\x91\x8C/,"",str);
+	gsub(/\xF0\x9F\x91\x8D/,"",str);
+	gsub(/\xF0\x9F\x91\x8E/,"",str);
+	gsub(/\xF0\x9F\x91\x8F/,"",str);
+	gsub(/\xF0\x9F\x91\x90/,"",str);
+	gsub(/\xF0\x9F\x91\x91/,"",str);
+	gsub(/\xF0\x9F\x91\x92/,"",str);
+	gsub(/\xF0\x9F\x91\x93/,"",str);
+	gsub(/\xF0\x9F\x91\x94/,"",str);
+	gsub(/\xF0\x9F\x91\x95/,"",str);
+	gsub(/\xF0\x9F\x91\x96/,"",str);
+	gsub(/\xF0\x9F\x91\x97/,"",str);
+	gsub(/\xF0\x9F\x91\x98/,"",str);
+	gsub(/\xF0\x9F\x91\x99/,"",str);
+	gsub(/\xF0\x9F\x91\x9A/,"",str);
+	gsub(/\xF0\x9F\x91\x9B/,"",str);
+	gsub(/\xF0\x9F\x91\x9C/,"",str);
+	gsub(/\xF0\x9F\x91\x9D/,"",str);
+	gsub(/\xF0\x9F\x91\x9E/,"",str);
+	gsub(/\xF0\x9F\x91\x9F/,"",str);
+	gsub(/\xF0\x9F\x91\xA0/,"",str);
+	gsub(/\xF0\x9F\x91\xA1/,"",str);
+	gsub(/\xF0\x9F\x91\xA2/,"",str);
+	gsub(/\xF0\x9F\x91\xA3/,"",str);
+	gsub(/\xF0\x9F\x91\xA4/,"",str);
+	gsub(/\xF0\x9F\x91\xA6/,"",str);
+	gsub(/\xF0\x9F\x91\xA7/,"",str);
+	gsub(/\xF0\x9F\x91\xA8/,"",str);
+	gsub(/\xF0\x9F\x91\xA9/,"",str);
+	gsub(/\xF0\x9F\x91\xAA/,"",str);
+	gsub(/\xF0\x9F\x91\xAB/,"",str);
+	gsub(/\xF0\x9F\x91\xAE/,"",str);
+	gsub(/\xF0\x9F\x91\xAF/,"",str);
+	gsub(/\xF0\x9F\x91\xB0/,"",str);
+	gsub(/\xF0\x9F\x91\xB1/,"",str);
+	gsub(/\xF0\x9F\x91\xB2/,"",str);
+	gsub(/\xF0\x9F\x91\xB3/,"",str);
+	gsub(/\xF0\x9F\x91\xB4/,"",str);
+	gsub(/\xF0\x9F\x91\xB5/,"",str);
+	gsub(/\xF0\x9F\x91\xB6/,"",str);
+	gsub(/\xF0\x9F\x91\xB7/,"",str);
+	gsub(/\xF0\x9F\x91\xB8/,"",str);
+	gsub(/\xF0\x9F\x91\xB9/,"",str);
+	gsub(/\xF0\x9F\x91\xBA/,"",str);
+	gsub(/\xF0\x9F\x91\xBB/,"",str);
+	gsub(/\xF0\x9F\x91\xBC/,"",str);
+	gsub(/\xF0\x9F\x91\xBD/,"",str);
+	gsub(/\xF0\x9F\x91\xBE/,"",str);
+	gsub(/\xF0\x9F\x91\xBF/,"",str);
+	gsub(/\xF0\x9F\x92\x80/,"",str);
+	gsub(/\xF0\x9F\x92\x81/,"",str);
+	gsub(/\xF0\x9F\x92\x82/,"",str);
+	gsub(/\xF0\x9F\x92\x83/,"",str);
+	gsub(/\xF0\x9F\x92\x84/,"",str);
+	gsub(/\xF0\x9F\x92\x85/,"",str);
+	gsub(/\xF0\x9F\x92\x86/,"",str);
+	gsub(/\xF0\x9F\x92\x87/,"",str);
+	gsub(/\xF0\x9F\x92\x88/,"",str);
+	gsub(/\xF0\x9F\x92\x89/,"",str);
+	gsub(/\xF0\x9F\x92\x8A/,"",str);
+	gsub(/\xF0\x9F\x92\x8B/,"",str);
+	gsub(/\xF0\x9F\x92\x8C/,"",str);
+	gsub(/\xF0\x9F\x92\x8D/,"",str);
+	gsub(/\xF0\x9F\x92\x8E/,"",str);
+	gsub(/\xF0\x9F\x92\x8F/,"",str);
+	gsub(/\xF0\x9F\x92\x90/,"",str);
+	gsub(/\xF0\x9F\x92\x91/,"",str);
+	gsub(/\xF0\x9F\x92\x92/,"",str);
+	gsub(/\xF0\x9F\x92\x93/,"",str);
+	gsub(/\xF0\x9F\x92\x94/,"",str);
+	gsub(/\xF0\x9F\x92\x95/,"",str);
+	gsub(/\xF0\x9F\x92\x96/,"",str);
+	gsub(/\xF0\x9F\x92\x97/,"",str);
+	gsub(/\xF0\x9F\x92\x98/,"",str);
+	gsub(/\xF0\x9F\x92\x99/,"",str);
+	gsub(/\xF0\x9F\x92\x9A/,"",str);
+	gsub(/\xF0\x9F\x92\x9B/,"",str);
+	gsub(/\xF0\x9F\x92\x9C/,"",str);
+	gsub(/\xF0\x9F\x92\x9D/,"",str);
+	gsub(/\xF0\x9F\x92\x9E/,"",str);
+	gsub(/\xF0\x9F\x92\x9F/,"",str);
+	gsub(/\xF0\x9F\x92\xA0/,"",str);
+	gsub(/\xF0\x9F\x92\xA1/,"",str);
+	gsub(/\xF0\x9F\x92\xA2/,"",str);
+	gsub(/\xF0\x9F\x92\xA3/,"",str);
+	gsub(/\xF0\x9F\x92\xA4/,"",str);
+	gsub(/\xF0\x9F\x92\xA5/,"",str);
+	gsub(/\xF0\x9F\x92\xA6/,"",str);
+	gsub(/\xF0\x9F\x92\xA7/,"",str);
+	gsub(/\xF0\x9F\x92\xA8/,"",str);
+	gsub(/\xF0\x9F\x92\xA9/,"",str);
+	gsub(/\xF0\x9F\x92\xAA/,"",str);
+	gsub(/\xF0\x9F\x92\xAB/,"",str);
+	gsub(/\xF0\x9F\x92\xAC/,"",str);
+	gsub(/\xF0\x9F\x92\xAE/,"",str);
+	gsub(/\xF0\x9F\x92\xAF/,"",str);
+	gsub(/\xF0\x9F\x92\xB0/,"",str);
+	gsub(/\xF0\x9F\x92\xB1/,"",str);
+	gsub(/\xF0\x9F\x92\xB2/,"",str);
+	gsub(/\xF0\x9F\x92\xB3/,"",str);
+	gsub(/\xF0\x9F\x92\xB4/,"",str);
+	gsub(/\xF0\x9F\x92\xB5/,"",str);
+	gsub(/\xF0\x9F\x92\xB8/,"",str);
+	gsub(/\xF0\x9F\x92\xB9/,"",str);
+	gsub(/\xF0\x9F\x92\xBA/,"",str);
+	gsub(/\xF0\x9F\x92\xBB/,"",str);
+	gsub(/\xF0\x9F\x92\xBC/,"",str);
+	gsub(/\xF0\x9F\x92\xBD/,"",str);
+	gsub(/\xF0\x9F\x92\xBE/,"",str);
+	gsub(/\xF0\x9F\x92\xBF/,"",str);
+	gsub(/\xF0\x9F\x93\x80/,"",str);
+	gsub(/\xF0\x9F\x93\x81/,"",str);
+	gsub(/\xF0\x9F\x93\x82/,"",str);
+	gsub(/\xF0\x9F\x93\x83/,"",str);
+	gsub(/\xF0\x9F\x93\x84/,"",str);
+	gsub(/\xF0\x9F\x93\x85/,"",str);
+	gsub(/\xF0\x9F\x93\x86/,"",str);
+	gsub(/\xF0\x9F\x93\x87/,"",str);
+	gsub(/\xF0\x9F\x93\x88/,"",str);
+	gsub(/\xF0\x9F\x93\x89/,"",str);
+	gsub(/\xF0\x9F\x93\x8A/,"",str);
+	gsub(/\xF0\x9F\x93\x8B/,"",str);
+	gsub(/\xF0\x9F\x93\x8C/,"",str);
+	gsub(/\xF0\x9F\x93\x8D/,"",str);
+	gsub(/\xF0\x9F\x93\x8E/,"",str);
+	gsub(/\xF0\x9F\x93\x8F/,"",str);
+	gsub(/\xF0\x9F\x93\x90/,"",str);
+	gsub(/\xF0\x9F\x93\x91/,"",str);
+	gsub(/\xF0\x9F\x93\x92/,"",str);
+	gsub(/\xF0\x9F\x93\x93/,"",str);
+	gsub(/\xF0\x9F\x93\x94/,"",str);
+	gsub(/\xF0\x9F\x93\x95/,"",str);
+	gsub(/\xF0\x9F\x93\x96/,"",str);
+	gsub(/\xF0\x9F\x93\x97/,"",str);
+	gsub(/\xF0\x9F\x93\x98/,"",str);
+	gsub(/\xF0\x9F\x93\x99/,"",str);
+	gsub(/\xF0\x9F\x93\x9A/,"",str);
+	gsub(/\xF0\x9F\x93\x9B/,"",str);
+	gsub(/\xF0\x9F\x93\x9C/,"",str);
+	gsub(/\xF0\x9F\x93\x9D/,"",str);
+	gsub(/\xF0\x9F\x93\x9E/,"",str);
+	gsub(/\xF0\x9F\x93\x9F/,"",str);
+	gsub(/\xF0\x9F\x93\xA0/,"",str);
+	gsub(/\xF0\x9F\x93\xA1/,"",str);
+	gsub(/\xF0\x9F\x93\xA2/,"",str);
+	gsub(/\xF0\x9F\x93\xA3/,"",str);
+	gsub(/\xF0\x9F\x93\xA4/,"",str);
+	gsub(/\xF0\x9F\x93\xA5/,"",str);
+	gsub(/\xF0\x9F\x93\xA6/,"",str);
+	gsub(/\xF0\x9F\x93\xA7/,"",str);
+	gsub(/\xF0\x9F\x93\xA8/,"",str);
+	gsub(/\xF0\x9F\x93\xA9/,"",str);
+	gsub(/\xF0\x9F\x93\xAA/,"",str);
+	gsub(/\xF0\x9F\x93\xAB/,"",str);
+	gsub(/\xF0\x9F\x93\xAE/,"",str);
+	gsub(/\xF0\x9F\x93\xB0/,"",str);
+	gsub(/\xF0\x9F\x93\xB1/,"",str);
+	gsub(/\xF0\x9F\x93\xB2/,"",str);
+	gsub(/\xF0\x9F\x93\xB3/,"",str);
+	gsub(/\xF0\x9F\x93\xB4/,"",str);
+	gsub(/\xF0\x9F\x93\xB6/,"",str);
+	gsub(/\xF0\x9F\x93\xB7/,"",str);
+	gsub(/\xF0\x9F\x93\xB9/,"",str);
+	gsub(/\xF0\x9F\x93\xBA/,"",str);
+	gsub(/\xF0\x9F\x93\xBB/,"",str);
+	gsub(/\xF0\x9F\x93\xBC/,"",str);
+	gsub(/\xF0\x9F\x94\x83/,"",str);
+	gsub(/\xF0\x9F\x94\x8A/,"",str);
+	gsub(/\xF0\x9F\x94\x8B/,"",str);
+	gsub(/\xF0\x9F\x94\x8C/,"",str);
+	gsub(/\xF0\x9F\x94\x8D/,"",str);
+	gsub(/\xF0\x9F\x94\x8E/,"",str);
+	gsub(/\xF0\x9F\x94\x8F/,"",str);
+	gsub(/\xF0\x9F\x94\x90/,"",str);
+	gsub(/\xF0\x9F\x94\x91/,"",str);
+	gsub(/\xF0\x9F\x94\x92/,"",str);
+	gsub(/\xF0\x9F\x94\x93/,"",str);
+	gsub(/\xF0\x9F\x94\x94/,"",str);
+	gsub(/\xF0\x9F\x94\x96/,"",str);
+	gsub(/\xF0\x9F\x94\x97/,"",str);
+	gsub(/\xF0\x9F\x94\x98/,"",str);
+	gsub(/\xF0\x9F\x94\x99/,"",str);
+	gsub(/\xF0\x9F\x94\x9A/,"",str);
+	gsub(/\xF0\x9F\x94\x9B/,"",str);
+	gsub(/\xF0\x9F\x94\x9C/,"",str);
+	gsub(/\xF0\x9F\x94\x9D/,"",str);
+	gsub(/\xF0\x9F\x94\x9E/,"",str);
+	gsub(/\xF0\x9F\x94\x9F/,"",str);
+	gsub(/\xF0\x9F\x94\xA0/,"",str);
+	gsub(/\xF0\x9F\x94\xA1/,"",str);
+	gsub(/\xF0\x9F\x94\xA2/,"",str);
+	gsub(/\xF0\x9F\x94\xA3/,"",str);
+	gsub(/\xF0\x9F\x94\xA4/,"",str);
+	gsub(/\xF0\x9F\x94\xA5/,"",str);
+	gsub(/\xF0\x9F\x94\xA6/,"",str);
+	gsub(/\xF0\x9F\x94\xA7/,"",str);
+	gsub(/\xF0\x9F\x94\xA8/,"",str);
+	gsub(/\xF0\x9F\x94\xA9/,"",str);
+	gsub(/\xF0\x9F\x94\xAA/,"",str);
+	gsub(/\xF0\x9F\x94\xAB/,"",str);
+	gsub(/\xF0\x9F\x94\xAE/,"",str);
+	gsub(/\xF0\x9F\x94\xAF/,"",str);
+	gsub(/\xF0\x9F\x94\xB0/,"",str);
+	gsub(/\xF0\x9F\x94\xB1/,"",str);
+	gsub(/\xF0\x9F\x94\xB2/,"",str);
+	gsub(/\xF0\x9F\x94\xB3/,"",str);
+	gsub(/\xF0\x9F\x94\xB4/,"",str);
+	gsub(/\xF0\x9F\x94\xB5/,"",str);
+	gsub(/\xF0\x9F\x94\xB6/,"",str);
+	gsub(/\xF0\x9F\x94\xB7/,"",str);
+	gsub(/\xF0\x9F\x94\xB8/,"",str);
+	gsub(/\xF0\x9F\x94\xB9/,"",str);
+	gsub(/\xF0\x9F\x94\xBA/,"",str);
+	gsub(/\xF0\x9F\x94\xBB/,"",str);
+	gsub(/\xF0\x9F\x94\xBC/,"",str);
+	gsub(/\xF0\x9F\x94\xBD/,"",str);
+	gsub(/\xF0\x9F\x95\x90/,"",str);
+	gsub(/\xF0\x9F\x95\x91/,"",str);
+	gsub(/\xF0\x9F\x95\x92/,"",str);
+	gsub(/\xF0\x9F\x95\x93/,"",str);
+	gsub(/\xF0\x9F\x95\x94/,"",str);
+	gsub(/\xF0\x9F\x95\x95/,"",str);
+	gsub(/\xF0\x9F\x95\x96/,"",str);
+	gsub(/\xF0\x9F\x95\x97/,"",str);
+	gsub(/\xF0\x9F\x95\x98/,"",str);
+	gsub(/\xF0\x9F\x95\x99/,"",str);
+	gsub(/\xF0\x9F\x95\x9A/,"",str);
+	gsub(/\xF0\x9F\x95\x9B/,"",str);
+	gsub(/\xF0\x9F\x97\xBB/,"",str);
+	gsub(/\xF0\x9F\x97\xBC/,"",str);
+	gsub(/\xF0\x9F\x97\xBD/,"",str);
+	gsub(/\xF0\x9F\x97\xBE/,"",str);
+	gsub(/\xF0\x9F\x97\xBF/,"",str);
+	gsub(/\xF0\x9F\x98\x80/,"",str);
+	gsub(/\xF0\x9F\x98\x87/,"",str);
+	gsub(/\xF0\x9F\x98\x88/,"",str);
+	gsub(/\xF0\x9F\x98\x8E/,"",str);
+	gsub(/\xF0\x9F\x98\x90/,"",str);
+	gsub(/\xF0\x9F\x98\x91/,"",str);
+	gsub(/\xF0\x9F\x98\x95/,"",str);
+	gsub(/\xF0\x9F\x98\x97/,"",str);
+	gsub(/\xF0\x9F\x98\x99/,"",str);
+	gsub(/\xF0\x9F\x98\x9B/,"",str);
+	gsub(/\xF0\x9F\x98\x9F/,"",str);
+	gsub(/\xF0\x9F\x98\xA6/,"",str);
+	gsub(/\xF0\x9F\x98\xA7/,"",str);
+	gsub(/\xF0\x9F\x98\xAC/,"",str);
+	gsub(/\xF0\x9F\x98\xAE/,"",str);
+	gsub(/\xF0\x9F\x98\xAF/,"",str);
+	gsub(/\xF0\x9F\x98\xB4/,"",str);
+	gsub(/\xF0\x9F\x98\xB6/,"",str);
+	gsub(/\xF0\x9F\x9A\x81/,"",str);
+	gsub(/\xF0\x9F\x9A\x82/,"",str);
+	gsub(/\xF0\x9F\x9A\x86/,"",str);
+	gsub(/\xF0\x9F\x9A\x88/,"",str);
+	gsub(/\xF0\x9F\x9A\x8A/,"",str);
+	gsub(/\xF0\x9F\x9A\x8D/,"",str);
+	gsub(/\xF0\x9F\x9A\x8E/,"",str);
+	gsub(/\xF0\x9F\x9A\x90/,"",str);
+	gsub(/\xF0\x9F\x9A\x94/,"",str);
+	gsub(/\xF0\x9F\x9A\x96/,"",str);
+	gsub(/\xF0\x9F\x9A\x98/,"",str);
+	gsub(/\xF0\x9F\x9A\x9B/,"",str);
+	gsub(/\xF0\x9F\x9A\x9C/,"",str);
+	gsub(/\xF0\x9F\x9A\x9D/,"",str);
+	gsub(/\xF0\x9F\x9A\x9E/,"",str);
+	gsub(/\xF0\x9F\x9A\x9F/,"",str);
+	gsub(/\xF0\x9F\x9A\xA0/,"",str);
+	gsub(/\xF0\x9F\x9A\xA1/,"",str);
+	gsub(/\xF0\x9F\x9A\xA3/,"",str);
+	gsub(/\xF0\x9F\x9A\xA6/,"",str);
+	gsub(/\xF0\x9F\x9A\xAE/,"",str);
+	gsub(/\xF0\x9F\x9A\xAF/,"",str);
+	gsub(/\xF0\x9F\x9A\xB0/,"",str);
+	gsub(/\xF0\x9F\x9A\xB1/,"",str);
+	gsub(/\xF0\x9F\x9A\xB3/,"",str);
+	gsub(/\xF0\x9F\x9A\xB4/,"",str);
+	gsub(/\xF0\x9F\x9A\xB5/,"",str);
+	gsub(/\xF0\x9F\x9A\xB7/,"",str);
+	gsub(/\xF0\x9F\x9A\xB8/,"",str);
+	gsub(/\xF0\x9F\x9A\xBF/,"",str);
+	gsub(/\xF0\x9F\x9B\x81/,"",str);
+	gsub(/\xF0\x9F\x9B\x82/,"",str);
+	gsub(/\xF0\x9F\x9B\x83/,"",str);
+	gsub(/\xF0\x9F\x9B\x84/,"",str);
+	gsub(/\xF0\x9F\x9B\x85/,"",str);
+	gsub(/\xF0\x9F\x8C\x8D/,"",str);
+	gsub(/\xF0\x9F\x8C\x8E/,"",str);
+	gsub(/\xF0\x9F\x8C\x90/,"",str);
+	gsub(/\xF0\x9F\x8C\x92/,"",str);
+	gsub(/\xF0\x9F\x8C\x96/,"",str);
+	gsub(/\xF0\x9F\x8C\x97/,"",str);
+	gsub(/\xF0\x9F\x8C\x98/,"",str);
+	gsub(/\xF0\x9F\x8C\x9A/,"",str);
+	gsub(/\xF0\x9F\x8C\x9C/,"",str);
+	gsub(/\xF0\x9F\x8C\x9D/,"",str);
+	gsub(/\xF0\x9F\x8C\x9E/,"",str);
+	gsub(/\xF0\x9F\x8C\xB2/,"",str);
+	gsub(/\xF0\x9F\x8C\xB3/,"",str);
+	gsub(/\xF0\x9F\x8D\x8B/,"",str);
+	gsub(/\xF0\x9F\x8D\x90/,"",str);
+	gsub(/\xF0\x9F\x8D\xBC/,"",str);
+	gsub(/\xF0\x9F\x8F\x87/,"",str);
+	gsub(/\xF0\x9F\x8F\x89/,"",str);
+	gsub(/\xF0\x9F\x8F\xA4/,"",str);
+	gsub(/\xF0\x9F\x90\x80/,"",str);
+	gsub(/\xF0\x9F\x90\x81/,"",str);
+	gsub(/\xF0\x9F\x90\x82/,"",str);
+	gsub(/\xF0\x9F\x90\x83/,"",str);
+	gsub(/\xF0\x9F\x90\x84/,"",str);
+	gsub(/\xF0\x9F\x90\x85/,"",str);
+	gsub(/\xF0\x9F\x90\x86/,"",str);
+	gsub(/\xF0\x9F\x90\x87/,"",str);
+	gsub(/\xF0\x9F\x90\x88/,"",str);
+	gsub(/\xF0\x9F\x90\x89/,"",str);
+	gsub(/\xF0\x9F\x90\x8A/,"",str);
+	gsub(/\xF0\x9F\x90\x8B/,"",str);
+	gsub(/\xF0\x9F\x90\x8F/,"",str);
+	gsub(/\xF0\x9F\x90\x90/,"",str);
+	gsub(/\xF0\x9F\x90\x93/,"",str);
+	gsub(/\xF0\x9F\x90\x95/,"",str);
+	gsub(/\xF0\x9F\x90\x96/,"",str);
+	gsub(/\xF0\x9F\x90\xAA/,"",str);
+	gsub(/\xF0\x9F\x91\xA5/,"",str);
+	gsub(/\xF0\x9F\x91\xAC/,"",str);
+	gsub(/\xF0\x9F\x91\xAD/,"",str);
+	gsub(/\xF0\x9F\x92\xAD/,"",str);
+	gsub(/\xF0\x9F\x92\xB6/,"",str);
+	gsub(/\xF0\x9F\x92\xB7/,"",str);
+	gsub(/\xF0\x9F\x93\xAC/,"",str);
+	gsub(/\xF0\x9F\x93\xAD/,"",str);
+	gsub(/\xF0\x9F\x93\xAF/,"",str);
+	gsub(/\xF0\x9F\x93\xB5/,"",str);
+	gsub(/\xF0\x9F\x94\x80/,"",str);
+	gsub(/\xF0\x9F\x94\x81/,"",str);
+	gsub(/\xF0\x9F\x94\x82/,"",str);
+	gsub(/\xF0\x9F\x94\x84/,"",str);
+	gsub(/\xF0\x9F\x94\x85/,"",str);
+	gsub(/\xF0\x9F\x94\x86/,"",str);
+	gsub(/\xF0\x9F\x94\x87/,"",str);
+	gsub(/\xF0\x9F\x94\x89/,"",str);
+	gsub(/\xF0\x9F\x94\x95/,"",str);
+	gsub(/\xF0\x9F\x94\xAC/,"",str);
+	gsub(/\xF0\x9F\x94\xAD/,"",str);
+	gsub(/\xF0\x9F\x95\x9C/,"",str);
+	gsub(/\xF0\x9F\x95\x9D/,"",str);
+	gsub(/\xF0\x9F\x95\x9E/,"",str);
+	gsub(/\xF0\x9F\x95\x9F/,"",str);
+	gsub(/\xF0\x9F\x95\xA0/,"",str);
+	gsub(/\xF0\x9F\x95\xA1/,"",str);
+	gsub(/\xF0\x9F\x95\xA2/,"",str);
+	gsub(/\xF0\x9F\x95\xA3/,"",str);
+	gsub(/\xF0\x9F\x95\xA4/,"",str);
+	gsub(/\xF0\x9F\x95\xA5/,"",str);
+	gsub(/\xF0\x9F\x95\xA6/,"",str);
+	gsub(/\xF0\x9F\x95\xA7/,"",str);
+	gsub(/\xF0\x9F\xA4\x9D/,"",str);
+	return str;
+}
+
+# yyyy-mm-dd
+function compare_date(day1, day2) {
+	split(day1, arr1, "-");
+	split(day2, arr2, "-");
+
+	if(arr1[3]==arr2[3] && arr1[2]==arr2[2] && arr1[1]==arr2[1]) {
+		return 0; # day1 = day2
+	} 
+	if ((arr1[1] > arr2[1]) || (arr1[1]==arr2[1] && arr1[2]>arr2[2]) || (arr1[1]==arr2[1] && arr1[2]==arr2[2] && arr1[3]>arr2[3])) {
+		return 1; # day1 after day2
+	}
+	else {
+		return -1; # day1 before day2
+	}
+}
+
