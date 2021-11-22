@@ -1,0 +1,41 @@
+# example: https://diaoconline.vn
+start_urls: []
+
+rules:
+    ads_link: [ ]
+    xpath_ads_link: ""
+    page: []
+    allowed_domains: []
+    org_url: ""
+    
+
+SITE: 'diaoconline'
+TABLE_NAME: 'DIAOCONLINE'
+
+# Real Estate VN values
+fields:
+    
+    ID_CLIENT: ["//dt[contains(text(),'Mã số tài sản')]/following::dd//text()"]
+    ADS_TITLE: ["//h1[@class='larger_title']//text()"]
+    PRICE_ORIGINAL: ["substring-after(//div[@class='money']//text(),':')"]
+    USED_SURFACE_ORIGINAL: ["//dt[contains(text(),'Tổng diện tích sử dụng')]/following::dd//text()"]
+    DETAILED_BRIEF: ["//div[@id='detail']/descendant::text()"]
+    LAND_TYPE: ["//td[contains(.,'Loại địa ốc')]/strong/a//text()"]
+    LEGAL_STATUS: ["//td[contains(.,'Tình trạng pháp lý')]/strong/a//text()"]
+    CITY: ["//div[@itemtype='http://data-vocabulary.org/Breadcrumb' and position()=3]/a/span//text()"]
+    DISTRICT: ["//div[@itemtype='http://data-vocabulary.org/Breadcrumb' and position()=4]/a/span//text()"]
+    PRO_DIRECTION: ["//td[contains(.,'Hướng:')]/strong/a//text()"]
+    NB_ROOMS: ["//td[contains(.,'Số phòng khách:')]/strong//text()"]
+    ALLEY_ACCESS: ["//td[contains(.,'Đường trước nhà:')]/strong//text()"]
+    PRO_WIDTH: ["//tr/td/strong[contains(.,'Diện tích khuôn viên:')]/following::tr/td[contains(.,'Chiều ngang trước:')]/strong//text()"]
+    PRO_LENGTH: ["//tr/td/strong[contains(.,'Diện tích khuôn viên:')]/following::tr/td[contains(.,'Chiều dài:')]/strong//text()"]
+    NB_FLOORS: ["//td[contains(.,'Số lầu:')]/strong//text()"]
+    BATHROOM: ["//td[contains(.,'Số phòng tắm')]/strong//text()"]
+    TOILET: ["//td[contains(.,'Số phòng tắm')]/strong//text()"]
+    BEDROOM: ["//td[contains(.,'Số phòng ngủ')]/strong//text()"]
+    DEALER_NAME: ["//a[@style='cursor: default']//text()"]
+    DEALER_TEL: ["//dt[contains(text(),'ĐT:')]/following::dd/span//text()"]
+    DEALER_ADDRESS: ["//dt[contains(text(),'Địa chỉ:')]/following::dd//text()"]
+    FULL_ADDRESS: ["substring-after(//span[@class='location']//text(),':')"]
+
+

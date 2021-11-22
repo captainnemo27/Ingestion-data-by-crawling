@@ -1,0 +1,36 @@
+# example: https://youhomes.vn/
+start_urls: []
+
+rules:
+    ads_link: []
+    xpath_ads_link: ""
+    page: []
+    allowed_domains: []
+    org_url: ""
+    
+
+SITE: 'youhomes.vn'
+TABLE_NAME: 'YOUHOMES'
+
+# Real Estate VN values
+fields:
+    ID_CLIENT: ["substring-after(//span[@style='float: right; text-decoration:underline']//text(),':')"]
+    ADS_LINK: ["//link[@rel='canonical']//@href"]
+    ADS_TITLE: ["//h1[@class='name-product']//text()"]
+    PRICE_ORIGINAL: ["//div[@class='left-top-price']/b//text()"]
+    USED_SURFACE_ORIGINAL: ["//p[contains(.,'Diện tích xây dựng')]/span//text()"]
+    SURFACE_ORIGINAL: ["//p[contains(.,'Diện tích')]/span//text()"]
+    DETAILED_BRIEF: ["//div[@class='description']/descendant::text()"]
+    LAND_TYPE: ["//p[contains(.,'Loại bất động sản') or contains(.,'Loại căn hộ')]/span//text()"]
+    PRO_DIRECTION: ["//p[contains(.,'Hướng')]/span//text()"]
+    ALLEY_ACCESS: ["//p[contains(.,'Ngõ/Hẻm')]/span//text()"]
+    FRONTAGE: ["//p[contains(.,'Mặt tiền')]/span//text()"]
+    NB_FLOORS: ["//p[contains(.,'Số tầng')]/span//text()"]
+    TOILET: ["//p[contains(.,'WC')]/span//text()"]
+    PRO_LENGTH: ["//p[contains(.,'Chiều dài')]/span//text()"]
+    LEGAL_STATUS: ["//p[contains(.,'Pháp lý')]/span//text()"] 
+    BEDROOM: ["//p[contains(.,'hòng ngủ')]/span//text()"] 
+    DEALER_NAME: ["//p[@class='name-employees-cs']//text()"]
+    DEALER_TEL: ["//tr[contains(*,'Di động')]/td[2]//text()"]
+    FULL_ADDRESS: ["//span[@class='gray-def']//text()"]
+

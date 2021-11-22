@@ -1,0 +1,42 @@
+# example: https://tinbatdongsan.com
+start_urls: []
+
+rules:
+    ads_link: []
+    xpath_ads_link: ""
+    page: []
+    allowed_domains: []
+    org_url: ""
+    
+
+SITE: 'tinbatdongsan'
+TABLE_NAME: 'TINBATDONGSAN'
+# https://tinbatdongsan.com/ban-nha-rieng-phuong-hoang-liet/ban-nha-bang-liet-huong-tron-tien-ich-kdt-linh-dam-nha-4-tang-o-luon-pr17902207.htm
+# https://tinbatdongsan.com/cho-thue-nha-rieng-duong-nguyen-luong-bang-1-phuong-o-cho-dua/chinh-chu-cho-thue-nha-tai-ngo-64-nguyen-luong-bang-dong-da-dt52m2x35-tang-gia-15-trieuthang-pr18113010.htm
+# https://tinbatdongsan.com/ban-nha-rieng-duong-bang-b-phuong-hoang-liet/ban-nha-bang-liet-100m2-mt-9m-oto-tranh-kinh-doanh-nhinh-8-ty-pr18112839.htm
+# Real Estate VN values
+fields:
+    
+    ID_CLIENT: ["//ul[@class='list-info clearfix']/li/div[1]//text()"]
+    ADS_LINK: ["//link[@rel='canonical']//@href"]
+    ADS_TITLE: ["//h1//text()"]
+    PRICE_ORIGINAL: ["//span[contains(text(), 'Giá')]/following::span//text()"]
+    SURFACE_ORIGINAL: ["//span[contains(text(), 'Diện tích')]/following::span//text()"]
+    DETAILED_BRIEF: ["//div[@id='infoDetail']/descendant::text()"]
+    LAND_TYPE: ["substring-before(//span[@class='green-clr']//text(),'-')"]
+    ADS_DATE_ORIGINAL: ["concat(//li[contains(.,'Ngày đăng')]/div//text(),' ',//li[contains(.,'Ngày đăng')]/div//text()[last()])"]
+    ADS_DATE: ["concat(//li[contains(.,'Ngày đăng')]/div//text(),'/',//li[contains(.,'Ngày đăng')]/div//text()[last()])"]
+    PRO_DIRECTION: ["//li[contains(.,'Hướng nhà')]/div//text()"]
+    NB_ROOMS: ["//li[contains(.,'Số phòng')]/div//text()"]
+    ALLEY_ACCESS: ["//li[contains(.,'Đường vào')]/div//text()"]
+    TOILET: ["//li[contains(.,'Số toilet')]/div//text()"]
+    FRONTAGE: ["//li[contains(.,'Mặt tiền')]/div//text()"]
+    NB_FLOORS: ["//li[contains(.,'Số tầng')]/div//text()"]
+    DEALER_NAME: ["//p[@class='fweight-bold dblue-clr']//text()"]
+    DEALER_TEL: ["//span[@id='toPhone']//text()"]
+    DEALER_EMAIL: ["//span[@id='toEmail']//text()"]
+    DEALER_ADDRESS: ["//span[@id='toAddress']//text()"]
+    FULL_ADDRESS: ["concat(substring-after(//span[@class='green-clr']//text(),'-'), string((//span[@class='green-clr']/ancestor::div[1]//text())[last()]))"]
+    LAT: ["//input[@id='hddLatitude']//@value"]
+    LON: ["//input[@id='hddLongtitude']//@value"]
+

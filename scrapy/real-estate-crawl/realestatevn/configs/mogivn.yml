@@ -1,0 +1,38 @@
+# example: https://mogi.vn
+start_urls: []
+
+rules:
+    ads_link: []
+    xpath_ads_link: []
+    page: []
+    allowed_domains: []
+    org_url: []
+    
+
+SITE: 'mogivn'
+TABLE_NAME: 'MOGIVN'
+
+# Real Estate VN values
+fields:
+    ID_CLIENT: ["//div[@gtm-act='report']//@id"]
+    ADS_LINK: ["//link[@rel='canonical']//@href"]
+    ADS_TITLE: ["//h1//text()"]
+    PRICE_ORIGINAL: ["//div[@class='price']//text()"]
+    USED_SURFACE_ORIGINAL: ["//li/span[contains(text(),'Diện tích sử dụng')]/following-sibling::text()"]    
+    SURFACE_ORIGINAL: ["concat(//li/span[contains(text(),'Diện tích đất')]/following-sibling::text(),//li/span[contains(text(),'Diện tích đất')]/following-sibling::sup//text())","concat(//span[contains(text(),'Diện tích đất')]/following::span[1]//text(),//span[contains(text(),'Diện tích đất')]/following::span[1]/sup//text())"]    
+    DETAILED_BRIEF: ["//div[@class='prop-info-content' or @class='info-content-body']/descendant::text()"]
+    ADS_DATE_ORIGINAL: ["//li/span[contains(text(),'Ngày đăng')]/following-sibling::text()","//span[contains(text(),'Ngày đăng')]/following::span[1]//text()"]
+    ADS_DATE: ["//li/span[contains(text(),'Ngày đăng')]/following-sibling::text()","//span[contains(text(),'Ngày đăng')]/following::span[1]//text()"]
+    PRO_DIRECTION: ["//li/span[contains(text(),'Hướng')]/following-sibling::text()"]
+    BEDROOM: ["//li/span[contains(text(),'Phòng ngủ')]/following-sibling::text()","//span[contains(text(),'Phòng ngủ')]/following::span[1]//text()"]
+    BATHROOM: ["//li/span[contains(text(),'Nhà tắm')]/following-sibling::text()","//span[contains(text(),'Nhà tắm')]/following::span[1]//text()"]    
+    LEGAL_STATUS: ["//li/span[contains(text(),'Pháp lý')]/following-sibling::text()","//span[contains(text(),'Pháp lý')]/following::span[1]//text()"]    
+    DEALER_NAME: ["//div[@class='agent-name']/a//text()"]
+    DEALER_TEL: ["//a[@class='fa-phone bold']//text()"]
+    FULL_ADDRESS: ["//div[contains(@class,'address')]//text()"]
+    LAT: ["substring-before(substring-after(//iframe[@title='map']//@src,'q='),',')"]
+    LON: ["substring-after(substring-after(//iframe[@title='map']//@src,'q='),',')"]
+    CITY: ["//meta[@content='2']/following::li/a/span//text()"]
+    DISTRICT: ["//meta[@content='3']/following::li/a/span//text()"]
+    PHOTOS: ["count(//div[@class='media-item'])"]
+

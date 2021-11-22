@@ -1,0 +1,46 @@
+# example: batdongsan.vn
+start_urls: []
+
+rules:
+    ads_link: []
+    xpath_ads_link: ""
+    page: []
+    allowed_domains: []
+    org_url: ""
+    
+
+SITE: 'batdongsan'
+TABLE_NAME: 'BATDONGSAN'
+
+# Real Estate VN values
+fields:
+    ID_CLIENT: ["//div/label[contains(text(),'Mã tin')]/following::span[1]//text()"]
+    ADS_LINK: ["//link[@rel='canonical']//@href"]
+    ADS_TITLE: ["//div[@class='P_Title1']//text()"]
+    PRICE_ORIGINAL: ["//div/label[contains(text(),'Giá cả')]/following::span[2]//text()"]
+    SURFACE_ORIGINAL: ["//div/label[contains(text(),'Diện tích')]/following::span[2]//text()"]
+    DETAILED_BRIEF: ["//div[contains(@class,'PD_Gioithieu')]/descendant::text()"]
+    LAND_TYPE: ["//div/label[contains(text(),'Loại:')]/following::span[2]//text()"]
+    ADS_DATE_ORIGINAL: ["//div/label[contains(text(),'Ngày đăng tin:')]/following::span[1]//text()"]
+    ADS_DATE: ["//div/label[contains(text(),'Ngày đăng tin:')]/following::span[1]//text()"]
+    WARD: ["//div/label[contains(text(),'Tỉnh/Thành')]/following::span/a[@class='wards-item']/span//text()"]
+    DISTRICT: ["//div/label[contains(text(),'Tỉnh/Thành')]/following::span/a[@class='district-item']/span//text()"]
+    CITY: ["//div/label[contains(text(),'Tỉnh/Thành')]/following::span/a[@class='city-item']/span//text()"]
+    STREET: ["//div/label[contains(text(),'Đường/phố:')]/following::span[2]//text()"]
+    FULL_ADDRESS: ["//div/label[contains(text(),'Địa chỉ:')]/following::span[1]//text()"]
+    NB_FLOORS: ["//li/span[contains(.,'Số tầng')]/following::span[1]//text()"]
+    BEDROOM: ["//li/span[contains(.,'phòng ngủ')]/following::span[1]//text()"]
+    BATHROOM: ["//li/span[contains(.,'phòng tắm')]/following::span[1]//text()"]
+    FRONTAGE: ["//li/span[contains(.,'Mặt tiền')]/following::span[1]//text()"]
+    ALLEY_ACCESS: ["//li/span[contains(.,'Đường vào')]/following::span[1]//text()"]
+    PRO_DIRECTION: ["//li/span[contains(.,'Hướng nhà')]/following::span[1]//text()"]
+    LEGAL_STATUS: ["//li/span[contains(.,'Pháp lý')]/following::span[1]//text()"]
+    DEALER_NAME: ["//div[@class='content']/div[@class='name']/a//text()"]
+    DEALER_ADDRESS: ["//div[@class='content']/following::div[@class='Addrees']//text()"]
+    DEALER_EMAIL: ["//div[@class='email']/a//text()"]
+    DEALER_TEL: ["//div[@class='phone']/a/span//text()"]
+    PHOTOS: ["count(//a[@class='changemedia'])"]
+    
+    
+    
+    

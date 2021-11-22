@@ -1,0 +1,41 @@
+# example: https://rongbay.com
+start_urls: []
+
+rules:
+    ads_link: []
+    xpath_ads_link: []
+    page: []
+    allowed_domains: []
+    org_url: []
+    
+
+SITE: 'rongbay'
+TABLE_NAME: 'RONGBAY'
+
+# Real Estate VN values
+fields:
+    ID_CLIENT: ["//span[contains(text(),'Mã tin')]/span//text()"]
+    ADS_LINK: ["//link[@rel='canonical']//@href"]
+    ADS_TITLE: ["//meta[@property='og:title']//@content"]
+    PRICE_ORIGINAL: ["//li[contains(text(),'Giá')]/span//text()"]
+    SURFACE_ORIGINAL: ["concat(//li[contains(@class,'li_50 icon_bds icon_dientich')]/span//text(),//li[contains(@class,'li_50 icon_bds icon_dientich')]/span/sup//text())"]
+    DETAILED_BRIEF: ["//div[@class='info_text']/descendant::text()"]
+    LAND_TYPE: ["//span[@class='nameScate']/a//text()"]
+    ADS_DATE_ORIGINAL: ["//span[contains(text(),'Thời gian')]/span//text()"]
+    ADS_DATE: ["//span[contains(text(),'Thời gian')]/span//text()"]
+    PRO_DIRECTION: ["substring-after(//li[contains(text(),'Hướng')]//text(),':')"]
+    #LEGAL_STATUS: ["//li[contains(text(),'pháp lý')]//text()"]
+    LEGAL_STATUS: ["substring-after(//li[contains(text(),'pháp lý')]//text(),':')"]
+    BEDROOM: ["substring-after(//li[contains(text(),'phòng ngủ')]//text(),':')"]
+    FRONTAGE: ["substring-after(//li[contains(text(),'Mặt tiền')]//text(),':')"]
+    CITY: ["substring-before(substring-after(//script[contains(text(),'city_name')]//text(),'city_name = '),';')"]
+    PROJECT_NAME: ["//li[contains(text(),'Dự án:')]/b/text()"]
+    DEALER_NAME: ["substring-before(substring-after(//script[contains(text(),'var row_ad_username')]//text(),'row_ad_username = '),';')"]
+    DEALER_TEL: ["substring-before(substring-after(//script[contains(text(),'var row_ad_mobile')]//text(),'row_ad_mobile = '),';')"]
+    DEALER_EMAIL: ["substring-before(substring-after(//script[contains(text(),'var ad_useremail')]//text(),'ad_useremail 	='),';')"]
+    FULL_ADDRESS: ["//span[contains(text(),'Địa chỉ')]/following::text()"]
+    PHOTOS: ["substring-before(substring-after(//script[contains(text(),'var number_images')]//text(),'number_images = '),';')"]
+    LAT: ["substring-before(substring-after(//script[contains(text(),'latitude')]//text(),'\"latitude\":'),',')"]
+    LON: ["substring-before(substring-after(//script[contains(text(),'longitude')]//text(),'\"longitude\":'),'}')"]
+    
+

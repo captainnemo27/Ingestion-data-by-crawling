@@ -1,0 +1,33 @@
+# example: https://dothi.net
+start_urls: [ ]
+
+rules: []
+
+SITE: "batdongsan.com.vn"
+TABLE_NAME: "BATDONGSANCOMVN"
+
+# Real Estate VN values
+fields:
+    ID_CLIENT: ["//div[contains(concat(' ', @id, ' '), 'product-detail-')]//@prid"]
+    ADS_LINK: ["//meta[@property='og:url']//@content"]
+    ADS_TITLE: ["//meta[@property='og:title']//@content"]
+    PRICE_ORIGINAL: ["//span[contains(text(), 'Mức giá')]/following::span[@class='sp2' or @class='value']//text()","//li[@class='re__price']/div[2]/p//text()"]
+    SURFACE_ORIGINAL: ["//span[contains(text(), 'Diện tích')]/following::span[@class='sp2' or @class='value']//text()","//li[@class='re__area']/div[2]/p//text()"]
+    DETAILED_BRIEF: ["//div[@class='re__section-body re__detail-content js__section-body js__pr-description js__tracking' or @class='des-product' or @class='re__detail-content js__tracking']/descendant::text()"] 
+    LAND_TYPE: ["//div[normalize-space(span)='Loại tin đăng:']/span[@class='value' or @class='r2']//text()","//div[@class='re__text-lable'][contains(text(), 'Loại tin đăng')]/following::div[@class='re__text-content']//text()"]
+    PRO_DIRECTION: ["//div[normalize-space(span)='Hướng nhà:']/span[@class='value' or @class='r2']//text()","//div[@class='re__text-lable'][contains(text(), 'Hướng nhà')]/following::div[@class='re__text-content']//text()"]
+    LEGAL_STATUS: ["//div[normalize-space(span)='Pháp lý:']/span[@class='value' or @class='r2']//text()","//div[@class='re__text-lable'][contains(text(), 'Pháp lý')]/following::div[@class='re__text-content']//text()"]
+    NB_FLOORS: ["//div[normalize-space(span)='Số tầng:']/span[@class='value' or @class='r2']//text()"]
+    TOILET: ["//div[normalize-space(span)='Số toilet:']/span[@class='value' or @class='r2']//text()"]
+    BEDROOM: ["//div[normalize-space(span)='Số phòng ngủ:']/span[@class='value' or @class='r2']//text()"]
+    ALLEY_ACCESS: ["//div[normalize-space(span)='Đường vào:']/span[@class='value' or @class='r2']//text()","//div[@class='re__text-lable'][contains(text(), 'Đường vào')]/following::div[@class='re__text-content']//text()"]
+    FRONTAGE: ["//div[normalize-space(span)='Mặt tiền:']/span[@class='value' or @class='r2']//text()","//div[@class='re__text-lable'][contains(text(), 'Mặt tiền')]/following::div[@class='re__text-content']//text()"]
+    ADS_DATE_ORIGINAL: ["//span[contains(text(), 'Ngày đăng')]/following::span[@class='value' or @class='r2' or @class='re__sp3']//text()"]
+    ADS_DATE: ["//span[contains(text(), 'Ngày đăng')]/following::span[@class='value' or @class='r2' or @class='re__sp3']//text()"]
+    FULL_ADDRESS: ["//div[normalize-space(span)='Địa chỉ:']/span[@class='value' or @class='r2']//text()","//div[@class='re__text-lable'][contains(text(), 'Địa chỉ')]/following::div[@class='re__text-content']//text()"]
+    DEALER_NAME: ["//div[@class='re__contact-name js_contact-name']//@title","//div[@class='re__col-right']/h3//text()"]
+    DEALER_TEL: ["//div[@class='re__btn re__btn-green-solid--md re__link-phone phone']/span//@raw","//div[@class='re__btn-hotline js__product-details-hidden-phone']//@raw"]
+    CITY: ["//a[@level='2']//text()"]
+    DISTRICT: ["//a[@level='3']//text()"]
+
+

@@ -1,0 +1,47 @@
+# example: https://rever.vn
+start_urls: []
+
+rules:
+    ads_link: []
+    xpath_ads_link: ""
+    page: []
+    allowed_domains: []
+    org_url: ""
+    
+
+SITE: 'rever.vn'
+TABLE_NAME: 'REVERVN'
+
+# Real Estate VN values
+fields:
+    ID_CLIENT: ["//p[@class='listing__cta--bottom-id']/strong//text()"]
+    ADS_LINK: ["//link[@rel='canonical']//@href"]
+    ADS_TITLE: ["//h1[@class='heading-01 visible-pc']//text()"]
+    STREET: ["substring-before(substring-after(//script[contains(text(),'street')]//text(),'\"street\" :'),',')"]
+    #WARD: ["//div[@class='listing__home--address visible-sm']/h4[2]//text()"]
+    WARD: ["substring-before(substring-after(//script[contains(text(),'ward')]//text(),'\"ward\" :'),',')"]
+    #DISTRICT: ["//div[@class='listing__home--address visible-sm']/h4[3]//text()"]
+    DISTRICT: ["substring-before(substring-after(//script[contains(text(),'district')]//text(),'\"district\" :'),',')"]
+    #CITY: ["//div[@class='listing__home--address visible-sm']/h4[4]//text()"]
+    CITY: ["substring-before(substring-after(//script[contains(text(),'city')]//text(),'\"city\" :'),',')"]
+    FULL_ADDRESS: ["substring-before(substring-after(//script[contains(text(),'full')]//text(),'\"full\" :'),'\",')"]
+    LAT: ["substring-before(substring-after(//script[contains(text(),'lat')]//text(),'\"lat\" :'),',')"]
+    LON: ["substring-before(substring-after(//script[contains(text(),'lon')]//text(),'\"lon\" :'),',')"]
+
+    PRICE_ORIGINAL: ["//ul[@class='detail-more']/li/p[contains(text(),'Giá')]/following-sibling::p//text()"]
+    LAND_TYPE: ["//ul[@class='detail-more']/li/p[contains(text(),'Loại hình')]/following-sibling::p//text()"]
+    BEDROOM: ["//ul[@class='detail-more']/li/p[contains(text(),'hòng ngủ')]/following-sibling::p//text()"]
+    BATHROOM: ["//ul[@class='detail-more']/li/p[contains(text(),'hòng tắm')]/following-sibling::p//text()"]
+    USED_SURFACE_ORIGINAL: ["//ul[@class='detail-more']/li/p[contains(text(),'Diện tích sử dụng')]/following-sibling::p//text()"]
+    SURFACE_ORIGINAL: ["//li/p[normalize-space(text())='Diện tích']/following-sibling::strong//text()", "//ul[@class='detail-more']/li/p[normalize-space(text())='Diện tích']/following-sibling::p//text()"]
+    PRO_DIRECTION: ["//ul[@class='detail-more']/li/p[contains(text(),'Hướng cửa')]/following-sibling::p//text()"]
+    LEGAL_STATUS: ["//ul[@class='detail-more']/li/p[contains(text(),'Loại chủ quyền')]/following-sibling::p//text()"]
+    ADS_DATE_ORIGINAL: ["//ul[@class='detail-more']/li/p[contains(text(),'Ngày đăng') or contains(text(),'Thời gian')]/following-sibling::p//text()"]
+    ADS_DATE: ["substring-after(//ul[@class='detail-more']/li/p[contains(text(),'Ngày đăng')]/following-sibling::p//text(),'-')"]
+    NB_FLOORS: ["//ul[@class='detail-more']/li/p[contains(text(),'Số tầng')]/following-sibling::p//text()"]
+    PROJECT_NAME: ["//ul[@class='detail-more']/li/p[contains(text(),'Dự án')]/following-sibling::p//text()"]
+    DETAILED_BRIEF: ["//div[@class='listing__description' or @class='content collapsed pdb-0']/descendant::text()"]
+    PRO_LENGTH: ["//ul[@class='detail-more']/li/p[contains(text(),'Chiều dài')]/following-sibling::p//text()"]
+    PRO_WIDTH: ["//ul[@class='detail-more']/li/p[contains(text(),'Chiều rộng')]/following-sibling::p//text()"]
+    
+

@@ -1,0 +1,52 @@
+# example: https://dothi.net
+start_urls: [ "https://homedy.com/ban-nha-dat", "https://homedy.com/cho-thue-nha-dat" ]
+
+rules:
+    ads_link: [ "https://homedy.com/ban-.*", "https://homedy.com/cho-thue-.*" ]
+    xpath_ads_link: "//a[contains(@class, 'title padding-hoz')]//@href"
+    page: [ "https://homedy.com/.*" ]
+    allowed_domains: [ "homedy.com" ]
+    org_url: 'https://homedy.com'
+    
+
+SITE: 'homedy'
+TABLE_NAME: 'HOMEDY'
+
+# # Real Estate VN values
+# fields:
+#     #<td style="color: #36a445; font-weight: bold">13514974</td>
+#     ID_CLIENT: "//td[contains(@style,'#36a445')]//text()"
+#     #<link rel="canonical" href="https://dothi.net/ban-can-ho-chung-cu-bien-hoa-universe-complex/mua-nha-chuan-5-saobien-hoa-univers-complex-tp-bien-hoa-co-hoi-trung-ngay-xe-hoi-mazda-luxury-pr13514974.htm" />
+#     ADS_LINK: '//link[@rel="canonical"]//@href'
+#     #<meta name="title" content="Mua nhà chuẩn 5 SaoBiên Hòa Univers Complex TP Biên Hòa, cơ hội trúng ngay xe hơi Mazda Luxury. Liên hệ: 0906608683" /><meta property="og:image" content="https://img.dothi.net/crop/624x476/2021/08/25/20210825142214-7793_wm.jpg" /><meta property="og:title" itemprop="thumbnailUrl" content="Mua nhà chuẩn 5 SaoBiên Hòa Univers Complex TP Biên Hòa, cơ hội trúng ngay xe hơi Mazda Luxury. Liên hệ: 0906608683" /><meta property="og:url" itemprop="url" content="/ban-can-ho-chung-cu-bien-hoa-universe-complex/mua-nha-chuan-5-saobien-hoa-univers-complex-tp-bien-hoa-co-hoi-trung-ngay-xe-hoi-mazda-luxury-pr13514974.htm" /><meta property="og:description" itemprop="description" content="Đăng ký nhận chương trình chiết khấu, ưu đãi lớn nhất dự án Biên Hòa Universe Complex - căn hộ phân khúc cao cấp đầu tiên tại trung tâm TP. Biên Hòa: - Giá giai đoạn 1 chỉ 31 triệu/m2 cho căn hộ thuộ. Liên hệ: 0906608683" /></head>
+#     ADS_TITLE: '//meta[@name="title"]//@content'
+#     # Giá: <span class="spanprice"> 31 Triệu/m²</span>
+#     PRICE_ORIGINAL: '//span[@class="spanprice"]//text()'
+#     # <div id="ContentPlaceHolder1_ProductDetail1_divprice" class="pd-price">
+#     # Giá: <span class="spanprice">
+#     # 31 Triệu/m²</span>
+#     # Diện tích:<span>
+#     # 66&nbsp;m&#178;</span>
+#     SURFACE_ORIGINAL: "//div[@class='pd-price']/span[2]//text()"
+#     # <div class="pd-desc-content">
+#     DETAILED_BRIEF: "//div[@class='pd-desc-content']/descendant::text()"
+#     # <td><b>Loại tin rao</b></td>
+#     # <td>
+#     #    Bán căn hộ chung cư</td>
+#     #</tr>
+#     LAND_TYPE: "//tr[contains(*,'Loại tin rao')]/td[2]//text()"
+#     ADS_DATE_ORIGINAL: "//tr[contains(*,'Ngày đăng tin')]/td[2]//text()"
+#     PRO_DIRECTION: "//tr[contains(*,'Hướng nhà')]/td[2]//text()"
+#     NB_ROOMS: "//tr[contains(*,'Số phòng')]/td[2]//text()"
+#     ALLEY_ACCESS: "//tr[contains(*,'Đường vào')]/td[2]//text()"
+#     FRONTAGE: "//tr[contains(*,'Mặt tiền')]/td[2]//text()"
+#     NB_FLOORS: "//tr[contains(*,'Số tầng')]/td[2]//text()"
+#     BATHROOM: "//tr[contains(*,'Số toilet')]/td[2]//text()"
+#     DEALER_NAME: "//tr[contains(*,'Tên liên lạc')]/td[2]//text()"
+#     DEALER_TEL: "//tr[contains(*,'Di động')]/td[2]//text()"
+#     # <input type="hidden" name="ctl00$ContentPlaceHolder1$ProductDetail1$hddDiadiem" id="hddDiadiem" value="Dự án Biên Hoà Universe Complex, Đường Xa Lộ Hà Nội, Phường Hố Nai, Biên Hòa, Đồng Nai" />
+#     FULL_ADDRESS: '//input[@id="hddDiadiem"]//@value'
+#     LAT: '//input[@id="hddLatitude"]//@value'
+#     LON: '//input[@id="hddLongtitude"]//@value'
+#     PHOTOS: '//input[@id="CountImage"]//@value'
+
