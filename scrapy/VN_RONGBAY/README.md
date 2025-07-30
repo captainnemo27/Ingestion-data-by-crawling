@@ -26,7 +26,7 @@ strategy crawling as below.
         3. Extract total number of index-pages N need to download,
         4. Download all index-pages html file (from page 1 to N) and store it
         in LIST_MODE folder
-        5. Parsing the neccessary data from all page-index html file and save it
+        5. Parsing the necessary data from all page-index html file and save it
         to extract tab.
 
 **2.3.** Create need_download.tab which include only newly created ads.

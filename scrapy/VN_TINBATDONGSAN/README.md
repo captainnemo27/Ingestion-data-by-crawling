@@ -33,7 +33,7 @@ strategy crawling as below.
         2. Extract total number of index-pages N need to download,
         3. Download all index-pages html file (from page 1 to N) and store it
         in LIST_MODE folder
-        3. Parsing the neccessary data from all page-index html file and save it
+        3. Parsing the necessary data from all page-index html file and save it
         to extract tab.
 
 **Step 3:** Download detail pages by reading need_download.tab file in DELTA folder
