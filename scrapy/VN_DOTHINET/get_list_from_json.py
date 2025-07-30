@@ -63,7 +63,7 @@ while (index < len(data)):
     query_insert = str(city_name)+'-'+str(prefix_city)
     
     index = index + 1
-    print query_insert.lower()
+    print(query_insert.lower())
     
     
     
