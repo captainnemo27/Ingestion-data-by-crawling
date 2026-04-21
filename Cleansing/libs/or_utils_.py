@@ -685,14 +685,14 @@ def split_tel(tel):
 # DEALER_JOIN_DATE
 def count_days(date_now, str_date):
     '''
-    Returns date before a period
+    Calculate the number of days represented by a period
 
         Parameters:
             date_now (datetime)
             str_date (str): a period
 
         Returns:
-            result (datetime): raw splited address for after solving
+            int: number of days represented by the period
     '''
     if (date_now is None) or (str_date is None):
         return None
