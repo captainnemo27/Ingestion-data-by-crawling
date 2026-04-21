@@ -25,7 +25,7 @@
 	- `dic_CITY_DISTRICT_WARD`, `dic_CITY_DISTRICT_STREET`: dic wards or streets in districts, districts in cities, with with key1 = 'thanhpho', key2 = 'Hà Nội', key3 = 'quan', key4 = 'ba dinh', key5 = 'phuong' and value = list ward or list streets. Example: data["thanhpho"]["Hà Nội"]["quan"]["Ba Đình"]["phuong"] 
 	- `dic_combine_level`: dic wards or streets in districts, districts in cities in unidecode format, with key1 = 'thanh pho ho chi minh', key2 = 'quan 3'
 -  clean_site.py: the script used for cleaning each site
--  create_dic.py: create neccessary dictionaries for split address
+-  create_dic.py: create necessary dictionaries for split address
 -  pre_visualize.py: the script for checking after crawling or cleansing each site
 -  data_backup.py: the script backup records cleaned to backup table
 -  requirements.txt: contains all libraries with versions
